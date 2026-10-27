@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────── Temas ─────────
+   perola  = Pérola & Ouro (padrão, claro)
+   rose    = Rosé Champanhe (claro, ouro rosé)
+   salvia  = Jardim Sálvia (claro, verde e ouro)
+   onix    = Ônix & Champanhe (escuro)
+   rose-azul = Rosé & Azul Pérola (padrão: fundo rosé, letras azul perolado, detalhes em ouro) */
+:root, [data-tema='perola'] {
+  color-scheme: light;
+  --creme: 253 250 245; --vidro: 255 255 255; --blush: 250 241 234; --areia: 234 221 202;
+  --marrom: 72 56 43; --ouro: 184 146 79; --champanhe: 154 118 56; --rosa: 196 132 132;
+  --salvia: 112 132 96; --folha: 84 104 72; --tinta: 40 28 16;
+  --veu: 255 255 255; --realce: 72 56 43; --overlay: 46 34 24; --halo: 255 252 246;
+  --sombra: 120 90 50; --sombra-a: .22; --brilho: 201 163 95;
+  --ouro-1: #8C6A33; --ouro-2: #C9A35F; --ouro-3: #A37D3E; --ouro-4: #D9BB7E; --ouro-5: #8F6A30;
+  --fundo-1: rgba(218,186,130,.18); --fundo-2: rgba(232,190,190,.16);
+}
+[data-tema='rose-azul'] {
+  color-scheme: light;
+  /* referência do Thiago: rosé #B86B7E em toda a tela; azul #0D33B3 nas letras dos painéis pérola.
+     Direto sobre o rosé o texto usa um azul-marinho da mesma família (#030E3A, contraste 4,8:1), porque o #0D33B3 ali daria 2,5:1. */
+  --creme: 184 107 126; --vidro: 255 251 252; --blush: 166 90 110; --areia: 222 168 182;
+  --marrom: 3 14 58; --ouro: 255 236 200; --champanhe: 255 246 224; --rosa: 255 236 240;
+  --salvia: 80 110 170; --folha: 3 14 58; --tinta: 36 26 14;
+  --veu: 255 255 255; --realce: 255 255 255; --overlay: 60 24 40; --halo: 255 250 251;
+  --sombra: 90 30 50; --sombra-a: .35; --brilho: 255 230 190;
+  --ouro-1: #FFF6E0; --ouro-2: #FFFFFF; --ouro-3: #FBE7BC; --ouro-4: #FFFFFF; --ouro-5: #F8E6C0;
+  --fundo-1: rgba(255,255,255,.18); --fundo-2: rgba(110,40,65,.22);
+  --perola-1: #020A2C; --perola-2: #08206F; --perola-3: #0A2890; --perola-4: #061A5C; --perola-5: #030E3A;
+}
+/* Painéis pérola (cartões, campos, carrinho, janelas, menus): azul #0D33B3 exato e ouro clássico */
+[data-tema='rose-azul'] :is(.moldura, .card-admin, [class~="bg-vidro"], [class*="bg-vidro/"], [class~="bg-creme"], .campo, aside, [role="dialog"], .btn-linha, [class~="bg-blush"], .etiqueta) {
+  --creme: 255 247 248; --vidro: 255 251 252; --blush: 250 232 237; --areia: 236 208 216;
+  --marrom: 13 51 179; --ouro: 184 146 79; --champanhe: 150 114 52; --rosa: 184 107 126;
+  --folha: 13 51 179; --realce: 13 51 179; --brilho: 214 178 120;
+  --ouro-1: #8C6A33; --ouro-2: #C9A35F; --ouro-3: #A37D3E; --ouro-4: #D9BB7E; --ouro-5: #8F6A30;
+  --perola-1: #0A2890; --perola-2: #0D33B3; --perola-3: #3D63D0; --perola-4: #1A42C0; --perola-5: #0B2A99;
+}
+[data-tema='rose'] {
+  color-scheme: light;
+  --creme: 255 248 246; --vidro: 255 255 255; --blush: 252 234 231; --areia: 240 214 208;
+  --marrom: 92 58 62; --ouro: 196 148 118; --champanhe: 166 104 88; --rosa: 206 128 132;
+  --salvia: 126 140 110; --folha: 92 108 80; --tinta: 60 30 30;
+  --veu: 255 255 255; --realce: 92 58 62; --overlay: 60 34 38; --halo: 255 250 248;
+  --sombra: 150 90 90; --sombra-a: .2; --brilho: 214 160 140;
+  --ouro-1: #9A5F4E; --ouro-2: #D9A58C; --ouro-3: #B27863; --ouro-4: #E8BFA9; --ouro-5: #95584A;
+  --fundo-1: rgba(230,170,160,.22); --fundo-2: rgba(214,190,150,.16);
+}
+[data-tema='salvia'] {
+  color-scheme: light;
+  --creme: 248 250 244; --vidro: 255 255 255; --blush: 238 243 232; --areia: 214 224 204;
+  --marrom: 48 60 44; --ouro: 176 141 87; --champanhe: 136 106 52; --rosa: 190 130 126;
+  --salvia: 104 130 92; --folha: 74 98 64; --tinta: 34 30 18;
+  --veu: 255 255 255; --realce: 48 60 44; --overlay: 30 40 28; --halo: 252 253 249;
+  --sombra: 70 90 60; --sombra-a: .2; --brilho: 176 141 87;
+  --ouro-1: #7E6230; --ouro-2: #C2A062; --ouro-3: #957436; --ouro-4: #D4BA82; --ouro-5: #7A5C28;
+  --fundo-1: rgba(168,190,150,.22); --fundo-2: rgba(212,186,130,.16);
+}
+[data-tema='onix'] {
+  color-scheme: dark;
+  --creme: 10 8 7; --vidro: 21 17 14; --blush: 30 24 19; --areia: 44 36 29;
+  --marrom: 242 232 218; --ouro: 201 163 95; --champanhe: 238 217 168; --rosa: 226 177 174;
+  --salvia: 157 176 140; --folha: 181 199 163; --tinta: 10 8 7;
+  --veu: 0 0 0; --realce: 255 255 255; --overlay: 0 0 0; --halo: 30 24 19;
+  --sombra: 0 0 0; --sombra-a: .9; --brilho: 238 217 168;
+  --ouro-1: #8C6A33; --ouro-2: #EED9A8; --ouro-3: #C9A35F; --ouro-4: #FFF3D6; --ouro-5: #B48A45;
+  --fundo-1: rgba(201,163,95,.10); --fundo-2: rgba(226,177,174,.06);
+}
+
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-creme font-sans font-light text-marrom antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 85% -10%, var(--fundo-1), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, var(--fundo-2), transparent 60%);
+    background-attachment: fixed;
+  }
+  /* grão fino de filme */
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .045; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  h1, h2, h3 { @apply font-serif font-light text-marrom; letter-spacing: -0.015em; }
+  ::selection { background: rgb(var(--ouro)); color: rgb(var(--tinta)); }
+  :focus-visible { outline: 1px solid rgb(var(--champanhe)); outline-offset: 3px; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: rgb(var(--creme)); }
+  ::-webkit-scrollbar-thumb { background: linear-gradient(var(--ouro-2), var(--ouro-1)); border-radius: 10px; border: 2px solid rgb(var(--creme)); }
+  [data-tema='onix'] input[type='date']::-webkit-calendar-picker-indicator { filter: invert(.85) sepia(.4); }
+  select option { background: rgb(var(--vidro)); color: rgb(var(--marrom)); }
+}
+
+@layer components {
+  /* ouro metálico em texto */
+  .texto-ouro {
+    background: linear-gradient(100deg, var(--ouro-1) 0%, var(--ouro-2) 25%, var(--ouro-3) 45%, var(--ouro-4) 55%, var(--ouro-5) 75%, var(--ouro-2) 100%);
+    background-size: 200% auto; padding-right: .06em; -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: brilhar 8s linear infinite;
+  }
+  /* cartão de vidro com borda em degradê dourado */
+  .moldura {
+    @apply relative rounded-moldura shadow-suave;
+    background: linear-gradient(160deg, rgb(var(--vidro) / .9), rgb(var(--halo) / .82)) padding-box,
+                linear-gradient(140deg, rgb(var(--ouro) / .6), rgb(var(--ouro) / .1) 40%, rgb(var(--ouro) / .06) 60%, rgb(var(--ouro) / .45)) border-box;
+    border: 1px solid transparent;
+    backdrop-filter: blur(18px);
+  }
+  .btn-ouro {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-3 text-sm font-medium tracking-[0.08em] text-tinta transition duration-300;
+    background: linear-gradient(110deg, #A8844A 0%, #EBD3A0 30%, #C9A35F 55%, #F7E6BF 75%, #B48A45 100%);
+    background-size: 220% auto;
+    box-shadow: 0 10px 30px -12px rgb(var(--brilho) / .8), inset 0 1px 0 rgba(255,255,255,.55);
+  }
+  .btn-ouro:hover { background-position: right center; box-shadow: 0 0 44px -6px rgb(var(--brilho) / .7), inset 0 1px 0 rgba(255,255,255,.6); transform: translateY(-1px); }
+  .btn-ouro:active { transform: translateY(0) scale(.98); }
+  .btn-ouro:disabled { @apply cursor-not-allowed opacity-40; transform: none; }
+  .btn-linha { @apply inline-flex items-center justify-center gap-2 rounded-full border border-ouro/50 bg-vidro/40 px-6 py-2.5 text-sm tracking-wide text-champanhe backdrop-blur transition duration-300 hover:border-champanhe hover:bg-ouro/10 hover:shadow-brilho; }
+  .btn-whats { @apply inline-flex items-center justify-center gap-2 rounded-full border border-[#25D366]/60 bg-[#25D366]/15 px-6 py-3 text-sm font-medium text-[#128C4A] [[data-tema='onix']_&]:text-[#7CF0A8] transition hover:bg-[#25D366]/25 hover:shadow-[0_0_30px_-6px_#25D366]; }
+  .campo { @apply w-full rounded-xl border border-areia bg-veu/60 px-4 py-2.5 text-sm text-marrom placeholder:text-marrom/30 transition focus:border-ouro focus:outline-none focus:ring-2 focus:ring-ouro/20; }
+  .rotulo { @apply mb-1.5 block text-[10px] font-medium uppercase tracking-[0.22em] text-champanhe/60; }
+  .etiqueta { @apply inline-flex items-center rounded-full border border-champanhe/30 bg-veu/70 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.24em] text-champanhe backdrop-blur; }
+  .pill { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium; }
+  .secao { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .titulo-secao { @apply font-serif text-4xl font-light leading-[1.02] sm:text-5xl lg:text-6xl; }
+  .kicker { @apply flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.42em] text-champanhe/80; }
+  .kicker::before { content: ''; @apply h-px w-8 bg-gradient-to-r from-transparent to-ouro; }
+  .card-admin { @apply rounded-2xl border border-areia bg-vidro/80 p-5 shadow-suave backdrop-blur; }
+  .tabela th { @apply px-3 py-2.5 text-left text-[10px] font-medium uppercase tracking-[0.18em] text-champanhe/50; }
+  .tabela td { @apply border-t border-areia/70 px-3 py-2.5 text-sm; }
+  .tabela tbody tr { @apply transition hover:bg-ouro/[.05]; }
+  /* linha de grade futurista */
+  .grade { background-image: linear-gradient(rgb(var(--ouro) / .08) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--ouro) / .08) 1px, transparent 1px); background-size: 64px 64px; }
+}
+
+.petala { position: absolute; top: -5vh; border-radius: 150% 0 150% 0; animation-name: cair; animation-timing-function: linear; animation-iteration-count: infinite; pointer-events: none; filter: blur(.3px) drop-shadow(0 0 6px rgb(var(--brilho) / .5)); }
+
+@media print {
+  body { background: #fff !important; color: #222 !important; }
+  body::before { display: none; }
+  header, footer, .no-print, .petala { display: none !important; }
+  #proposta { position: static !important; width: 100% !important; box-shadow: none !important; }
+  .lg\:grid-cols-\[1fr_400px\] { display: block !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petala { display: none; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Rosé & Azul Pérola: títulos em azul perolado com brilho lento (o ouro continua nos destaques) */
+[data-tema='rose-azul'] :is(h1, h2, h3, .titulo-secao):not(.texto-ouro) {
+  background: linear-gradient(100deg, var(--perola-1) 0%, var(--perola-2) 30%, var(--perola-3) 48%, var(--perola-4) 62%, var(--perola-5) 100%);
+  background-size: 220% auto; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: brilhar 12s linear infinite;
+}
+[data-tema='rose-azul'] :is(h1, h2, h3, .titulo-secao) .texto-ouro { -webkit-text-fill-color: transparent; }
+
+/* Rosé & Azul: texto secundário direto sobre o rosé fica opaco para manter a leitura */
+[data-tema='rose-azul'] :is(.text-marrom\/50, .text-marrom\/55, .text-marrom\/60, .text-marrom\/65, .text-marrom\/70, .text-marrom\/75, .text-marrom\/80, .text-champanhe\/60, .text-champanhe\/80):not(:is(.moldura, .card-admin, [class~="bg-vidro"], [class*="bg-vidro/"], [class~="bg-creme"], aside, [role="dialog"]) *) { color: rgb(var(--marrom) / .95); }
+[data-tema='rose-azul'] .btn-linha { background-color: rgb(255 247 248 / .9); }
+[data-tema='rose-azul'] .kicker:not(:is(.moldura, .card-admin, [class~="bg-vidro"], [class*="bg-vidro/"], [class~="bg-creme"], aside, [role="dialog"]) *) { color: rgb(var(--marrom)); }
+
+/* Números alinhados na serifada (Cormorant usa algarismos antigos por padrão: "1" parece "I") */
+.font-serif, .texto-ouro, h1, h2, h3 { font-variant-numeric: lining-nums; }

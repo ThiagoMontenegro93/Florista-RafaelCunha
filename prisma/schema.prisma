@@ -1,0 +1,448 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  FLORISTA
+  CLIENTE
+}
+
+model User {
+  id       String   @id @default(cuid())
+  email    String   @unique
+  nome     String?
+  role     Role     @default(CLIENTE)
+  pedidos  Pedido[]
+  criadoEm DateTime @default(now())
+}
+
+// ───────── Área de atendimento ─────────
+model Estado {
+  id         Int         @id @default(autoincrement())
+  sigla      String      @unique @db.Char(2)
+  nome       String
+  ativo      Boolean     @default(false)
+  totalMunic Int
+  municipios Municipio[]
+}
+
+model Municipio {
+  id       Int               @id @default(autoincrement())
+  ibge     Int?              @unique
+  nome     String
+  slug     String
+  regiao   String?
+  ativo    Boolean           @default(true)
+  estado   Estado            @relation(fields: [estadoId], references: [id])
+  estadoId Int
+  areas    AreaAtendimento[]
+  leads    Lead[]
+
+  @@unique([estadoId, slug])
+}
+
+model AreaAtendimento {
+  id               Int       @id @default(autoincrement())
+  municipio        Municipio @relation(fields: [municipioId], references: [id])
+  municipioId      Int
+  eventosPorDia    Int       @default(1)
+  entregaACombinar Boolean   @default(true)
+  observacao       String?
+}
+
+// ───────── Catálogo ─────────
+model FlorBrasil {
+  id          Int           @id @default(autoincrement())
+  slug        String        @unique
+  nome        String
+  cientifico  String
+  bioma       String
+  regiao      String
+  origem      String
+  meses       Int[]
+  duracaoMin  Int
+  duracaoMax  Int
+  cores       String[]
+  ocasioes    String[]
+  quandoUsar  String
+  trabalhamos Boolean       @default(true)
+  produtos    ProdutoFlor[]
+}
+
+model Produto {
+  id         String            @id
+  nome       String
+  categoria  String
+  descricao  String
+  preco      Decimal           @db.Decimal(10, 2)
+  prazo      String
+  badge      String?
+  exigeSinal Boolean           @default(false)
+  ativo      Boolean           @default(true)
+  imagem     String?
+  flores     ProdutoFlor[]
+  guias      GuiaConservacao[]
+  itens      PedidoItem[]
+}
+
+model ProdutoFlor {
+  produto   Produto    @relation(fields: [produtoId], references: [id])
+  produtoId String
+  flor      FlorBrasil @relation(fields: [florId], references: [id])
+  florId    Int
+
+  @@id([produtoId, florId])
+}
+
+model GuiaConservacao {
+  id        Int     @id @default(autoincrement())
+  produto   Produto @relation(fields: [produtoId], references: [id])
+  produtoId String
+  titulo    String
+  passos    Json
+  videoUrl  String?
+}
+
+// ───────── Pedidos ─────────
+enum StatusPedido {
+  RECEBIDO
+  CONTATO_ENTREGA
+  EM_CONFECCAO
+  ENTREGA_COMBINADA
+  ENTREGUE
+}
+
+model Pedido {
+  id              Int          @id @default(autoincrement())
+  numero          String       @unique
+  cliente         User?        @relation(fields: [clienteId], references: [id])
+  clienteId       String?
+  nome            String
+  whatsapp        String
+  email           String
+  bairro          String?
+  cidade          String?
+  referencia      String?
+  retirarAtelie   Boolean      @default(false)
+  combinarVia     String       @default("WhatsApp")
+  pagamento       String
+  cupom           String?
+  subtotal        Decimal      @db.Decimal(10, 2)
+  desconto        Decimal      @default(0) @db.Decimal(10, 2)
+  total           Decimal      @db.Decimal(10, 2)
+  status          StatusPedido @default(RECEBIDO)
+  dataDesejada    DateTime?
+  dataCasamento   DateTime? // lembrete de aniversário de casamento
+  parceiroCodigo  String? // ?ref= do parceiro que indicou
+  avaliacaoPedida Boolean      @default(false)
+  criadoEm        DateTime     @default(now())
+  itens           PedidoItem[]
+  avaliacao       Avaliacao?
+  indicacao       Indicacao?
+}
+
+model PedidoItem {
+  id             Int         @id @default(autoincrement())
+  pedido         Pedido      @relation(fields: [pedidoId], references: [id])
+  pedidoId       Int
+  tipo           TipoServico @default(PRODUTO)
+  produto        Produto?    @relation(fields: [produtoId], references: [id])
+  produtoId      String? // nulo para itens de serviço
+  refServico     String? // id da pré-venda, workshop, peça, proposta…
+  detalhe        String?
+  meta           Json?
+  tamanho        String      @default("—")
+  paleta         String      @default("—")
+  extras         String[]
+  mensagem       String?
+  localEvento    String?
+  horarioContato String?
+  preco          Decimal     @db.Decimal(10, 2)
+}
+
+// ───────── Assinaturas ─────────
+model PlanoAssinatura {
+  id          String       @id
+  nome        String
+  precoBase   Decimal      @db.Decimal(10, 2)
+  destaque    Boolean      @default(false)
+  itens       String[]
+  ativo       Boolean      @default(true)
+  assinaturas Assinatura[]
+}
+
+model CicloFaturamento {
+  dias          Int          @id // 30 | 45 | 60
+  nome          String
+  habilitado    Boolean      @default(true)
+  multiplicador Decimal      @db.Decimal(4, 2)
+  assinaturas   Assinatura[]
+}
+
+enum StatusAssinatura {
+  ATIVA
+  PAUSADA
+  CANCELADA
+}
+
+model Assinatura {
+  id              Int              @id @default(autoincrement())
+  nome            String
+  whatsapp        String
+  email           String
+  plano           PlanoAssinatura  @relation(fields: [planoId], references: [id])
+  planoId         String
+  ciclo           CicloFaturamento @relation(fields: [cicloDias], references: [dias])
+  cicloDias       Int
+  valor           Decimal          @db.Decimal(10, 2)
+  proximaEntrega  DateTime?
+  status          StatusAssinatura @default(ATIVA)
+  mpPreapprovalId String?
+  criadoEm        DateTime         @default(now())
+}
+
+// ───────── Prospecção (somente FLORISTA) ─────────
+model Lead {
+  id            Int        @id @default(autoincrement())
+  nome          String
+  nicho         String
+  cidade        String
+  municipio     Municipio? @relation(fields: [municipioId], references: [id])
+  municipioId   Int?
+  responsavel   String?
+  email         String?
+  whatsapp      String?
+  instagram     String?
+  cnpj          String?    @unique
+  placeId       String?    @unique
+  fonte         String
+  status        String     @default("Novo")
+  score         Int        @default(50)
+  rating        Float?
+  optOut        Boolean    @default(false)
+  ultimoContato DateTime?
+  envios        Envio[]
+  criadoEm      DateTime   @default(now())
+
+  @@index([whatsapp])
+}
+
+model Campanha {
+  id           Int       @id @default(autoincrement())
+  nome         String
+  nicho        String
+  template     String
+  canais       String[]
+  anexos       String[]
+  limiteDiario Int       @default(50)
+  porHora      Int       @default(20)
+  janelaInicio Int       @default(9)
+  janelaFim    Int       @default(18)
+  agendadaPara DateTime?
+  envios       Envio[]
+  criadaEm     DateTime  @default(now())
+}
+
+model Envio {
+  id         Int       @id @default(autoincrement())
+  campanha   Campanha  @relation(fields: [campanhaId], references: [id])
+  campanhaId Int
+  lead       Lead      @relation(fields: [leadId], references: [id])
+  leadId     Int
+  canal      String
+  status     String    @default("FILA") // FILA | ENVIADO | ENTREGUE | ABERTO | RESPONDEU | BOUNCE | BLOQUEADO
+  motivo     String?
+  enviadoEm  DateTime?
+}
+
+model ApisConfig {
+  id        String    @id // RESEND, WHATSAPP, INSTAGRAM, TELEGRAM, LINKEDIN, SHEETS, PLACES, IBGE
+  chave     String?
+  extra     Json?
+  conectado Boolean   @default(false)
+  testadoEm DateTime?
+}
+
+model RedeSocial {
+  id    Int     @id @default(autoincrement())
+  nome  String
+  url   String
+  ativo Boolean @default(true)
+}
+
+// ───────── Serviços do ateliê ─────────
+
+enum TipoServico {
+  PRODUTO
+  PRESERVACAO
+  PROPOSTA
+  ALUGUEL
+  WORKSHOP
+  PREVENDA
+  CONSULTORIA
+}
+
+model Proposta {
+  codigo    String   @id
+  nome      String
+  data      DateTime
+  local     String?
+  linhas    Json // [{ item, qtd, unit, total }]
+  total     Decimal  @db.Decimal(10, 2)
+  sinal     Decimal  @db.Decimal(10, 2)
+  status    String   @default("Enviada") // Enviada | Sinal pago
+  pedidoNum String?
+  criadaEm  DateTime @default(now())
+}
+
+model Consultoria {
+  codigo       String   @id // NOIVA-XXXX, também usado como crédito
+  nome         String
+  whatsapp     String
+  data         DateTime
+  hora         String
+  formato      String   @default("No ateliê")
+  pedidoNum    String
+  credito      Decimal  @db.Decimal(10, 2)
+  creditoUsado Boolean  @default(false)
+  criadoEm     DateTime @default(now())
+}
+
+model Parceiro {
+  codigo     String      @id
+  nome       String
+  tipo       String
+  email      String
+  whatsapp   String
+  comissao   Decimal     @default(0.10) @db.Decimal(4, 2)
+  criadoEm   DateTime    @default(now())
+  indicacoes Indicacao[]
+}
+
+model Indicacao {
+  id         Int      @id @default(autoincrement())
+  parceiro   Parceiro @relation(fields: [parceiroId], references: [codigo])
+  parceiroId String
+  pedido     Pedido?  @relation(fields: [pedidoId], references: [id])
+  pedidoId   Int?     @unique
+  pedidoNum  String
+  cliente    String
+  valor      Decimal  @db.Decimal(10, 2)
+  pago       Boolean  @default(false)
+  data       DateTime @default(now())
+}
+
+model PreVenda {
+  id         String        @id
+  nome       String
+  produto    String
+  preco      Decimal       @db.Decimal(10, 2)
+  data       DateTime
+  abreAte    DateTime
+  capacidade Int
+  vendidos   Int           @default(0)
+  espera     ListaEspera[]
+}
+
+model ListaEspera {
+  id         Int      @id @default(autoincrement())
+  preVenda   PreVenda @relation(fields: [preVendaId], references: [id])
+  preVendaId String
+  nome       String
+  whatsapp   String
+  avisado    Boolean  @default(false)
+  criadoEm   DateTime @default(now())
+}
+
+model PecaAluguel {
+  id       String           @id
+  nome     String
+  preco    Decimal          @db.Decimal(10, 2)
+  caucao   Decimal          @db.Decimal(10, 2)
+  estoque  Int
+  reservas ReservaAluguel[]
+}
+
+model ReservaAluguel {
+  id        Int         @id @default(autoincrement())
+  peca      PecaAluguel @relation(fields: [pecaId], references: [id])
+  pecaId    String
+  inicio    DateTime
+  fim       DateTime
+  qtd       Int
+  cliente   String?
+  pedidoNum String?
+  devolvida Boolean     @default(false)
+
+  @@index([pecaId, inicio, fim])
+}
+
+model Workshop {
+  id         String      @id
+  nome       String
+  data       DateTime
+  hora       String
+  duracao    String
+  vagas      Int
+  preco      Decimal     @db.Decimal(10, 2)
+  descricao  String
+  inscricoes Inscricao[]
+}
+
+model Inscricao {
+  id         Int      @id @default(autoincrement())
+  workshop   Workshop @relation(fields: [workshopId], references: [id])
+  workshopId String
+  nome       String
+  whatsapp   String
+  qtd        Int      @default(1)
+  pedidoNum  String?
+  criadoEm   DateTime @default(now())
+}
+
+model Avaliacao {
+  id       Int      @id @default(autoincrement())
+  pedido   Pedido?  @relation(fields: [pedidoId], references: [id])
+  pedidoId Int?     @unique
+  nome     String
+  nota     Int
+  texto    String
+  fotoUrl  String? // Cloudinary em produção
+  aprovada Boolean  @default(false)
+  criadoEm DateTime @default(now())
+}
+
+model ContratoCorporativo {
+  codigo     String   @id
+  empresa    String
+  razao      String?
+  cnpj       String
+  contato    String
+  email      String
+  frequencia String // semanal | quinzenal
+  arranjos   Json // { recepcao, mesa, banheiro, sala }
+  mensal     Decimal  @db.Decimal(10, 2)
+  anual      Boolean  @default(false)
+  inicio     DateTime
+  status     String   @default("Proposta") // Proposta | Ativo | Pausado
+  criadoEm   DateTime @default(now())
+  faturas    Fatura[]
+}
+
+model Fatura {
+  numero      String              @id
+  contrato    ContratoCorporativo @relation(fields: [contratoId], references: [codigo])
+  contratoId  String
+  competencia String // AAAA-MM
+  valor       Decimal             @db.Decimal(10, 2)
+  nf          String? // número da NFS-e retornado pelo provedor
+  status      String              @default("Emitida") // Emitida | Paga
+  criadoEm    DateTime            @default(now())
+
+  @@unique([contratoId, competencia])
+}
