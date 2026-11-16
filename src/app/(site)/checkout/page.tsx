@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useAtelie, descontoCupom } from '@/lib/store';
 import { brl, cn } from '@/lib/format';
+import { Miniatura } from '@/components/CartDrawer';
 
 const ETAPAS = ['Seus dados', 'Entrega', 'Pagamento'];
 
@@ -105,7 +106,7 @@ export default function CheckoutPage() {
       </div>
       <aside className="moldura h-fit p-6 text-sm lg:sticky lg:top-32">
         <p className="kicker mb-3">Resumo</p>
-        {carrinho.map((i) => <div key={i.uid} className="flex justify-between border-b border-areia py-2"><span>{i.emoji} {i.nome} <span className="text-marrom/50">({i.detalhe ?? i.tamanho})</span></span><span>{brl(i.preco)}</span></div>)}
+        {carrinho.map((i) => <div key={i.uid} className="flex items-center justify-between gap-3 border-b border-areia py-2"><span className="flex items-center gap-3"><Miniatura produtoId={i.produtoId} emoji={i.emoji} paleta={i.paleta} className="h-12 w-10" /><span>{i.nome} <span className="text-marrom/50">({i.detalhe ?? i.tamanho})</span></span></span><span className="shrink-0">{brl(i.preco)}</span></div>)}
         <div className="mt-3 space-y-1">
           <div className="flex justify-between"><span>Subtotal</span><span>{brl(subtotal)}</span></div>
           {desc > 0 && <div className="flex justify-between text-salvia"><span>Cupom {cupom}</span><span>−{brl(desc)}</span></div>}

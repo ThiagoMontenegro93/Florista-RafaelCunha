@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Miniatura } from '@/components/CartDrawer';
 import { useState } from 'react';
 import { useAtelie, TIMELINE_PEDIDO, proximoAniversario } from '@/lib/store';
 import { dataBR } from '@/data/servicos';
@@ -34,7 +35,7 @@ export default function ContaPage() {
         {pedidos.length === 0 && <p className="text-marrom/60">Nenhum pedido ainda. <Link className="text-ouro underline" href="/loja">Conheça a loja</Link>.</p>}
         {pedidos.map((p) => (
           <div key={p.numero} className="moldura flex flex-wrap items-center gap-4 p-5">
-            <span className="text-3xl">{p.itens[0]?.emoji}</span>
+            <Miniatura produtoId={p.itens[0]?.produtoId} emoji={p.itens[0]?.emoji ?? '💐'} paleta={p.itens[0]?.paleta} />
             <div className="flex-1">
               <p className="font-serif text-xl">#{p.numero} · {p.itens.map((i) => i.nome).join(', ')}</p>
               <p className="text-sm text-marrom/60">{new Date(p.data).toLocaleDateString('pt-BR')} · {brl(p.total)} · {TIMELINE_PEDIDO[p.status]}</p>

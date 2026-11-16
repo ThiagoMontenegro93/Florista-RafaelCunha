@@ -66,8 +66,8 @@ export function CartDrawer() {
   );
 }
 
-function Miniatura({ produtoId, emoji, paleta }: { produtoId?: string; emoji: string; paleta?: string }) {
+export function Miniatura({ produtoId, emoji, paleta, className = 'h-16 w-14' }: { produtoId?: string; emoji: string; paleta?: string; className?: string }) {
   const p = PRODUTOS.find((x) => x.id === produtoId);
-  if (!p) return <div className="flex h-16 w-14 shrink-0 items-center justify-center rounded-xl border border-ouro/50 bg-blush text-2xl">{emoji}</div>;
-  return <FotoArranjo imagem={fotoProduto(p)} alt={p.nome} seed={p.id} flores={p.flores} paleta={paleta || p.paletas[0]} forma={formaProduto(p)} fundo={p.gradiente} className="h-16 w-14 shrink-0 rounded-xl border border-ouro/40" />;
+  if (!p) return <div className={`flex ${className} shrink-0 items-center justify-center rounded-xl border border-ouro/50 bg-blush text-2xl`}>{emoji}</div>;
+  return <FotoArranjo imagem={fotoProduto(p)} alt={p.nome} seed={p.id} flores={p.flores} paleta={paleta || p.paletas[0]} forma={formaProduto(p)} fundo={p.gradiente} className={`${className} shrink-0 rounded-xl border border-ouro/40`} />;
 }
