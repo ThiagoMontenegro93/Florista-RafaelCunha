@@ -83,7 +83,8 @@ Cada arranjo da loja, do portfólio, dos planos e das Flores do Brasil já tem u
 
 1. Coloque as fotos em `public/fotos/` (JPG ou WebP, ~1600px no lado maior), por exemplo `public/fotos/produtos/bouquet-solar-luz.jpg`.
 2. Aponte em `src/data/fotos.ts` pelo id: produto (`bouquet-solar-luz`), portfólio (`santa-ignez-arco-branco`), `hero`, `rafael`, `plano-encanto`, `flor-rosa`. URLs do Cloudinary também funcionam.
-3. No portfólio, a foto também pode ser colada em **Admin › Portfólio**. Item do portfólio sem foto aparece com a etiqueta "Ilustração", para não passar a ideia de foto real.
+3. Hoje a loja (11 dos 12 arranjos), o topo do site e os 3 planos usam **fotos ilustrativas geradas por IA no Figma** (`public/fotos/`); troque pelas fotos reais quando houver. A loja avisa que as fotos são ilustrativas.
+4. No portfólio, a foto também pode ser colada em **Admin › Portfólio**. Item do portfólio sem foto aparece com a etiqueta "Ilustração", para não passar a ideia de foto real.
 
 ## As 10 ideias de negócio
 

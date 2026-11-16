@@ -34,7 +34,7 @@ export default function Home() {
           <div>
             <p className="kicker">Loja de encomendas</p>
             <h2 className="titulo-secao mt-2">Escolha, personalize, <em className="texto-ouro">receba</em></h2>
-            <p className="mt-3 max-w-xl text-sm text-marrom/70">Investimento a partir de R$ 290. Nota honesta: cada arranjo é único, você recebe a mesma paleta e o mesmo frescor, não uma cópia exata da foto.</p>
+            <p className="mt-3 max-w-xl text-sm text-marrom/70">Investimento a partir de R$ 290. Nota honesta: as fotos são ilustrativas e cada arranjo é único. Você recebe a mesma paleta e o mesmo frescor, não uma cópia exata da foto.</p>
           </div>
           <Link href="/loja" className="btn-linha">Ver os 12 arranjos</Link>
         </div>

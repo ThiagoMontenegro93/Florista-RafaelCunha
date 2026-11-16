@@ -24,19 +24,24 @@ type Props = {
 export function FotoArranjo({ imagem, alt, seed, flores, paleta, forma, fundo, className, prioridade }: Props) {
   const [erro, setErro] = useState(false);
   const [carregou, setCarregou] = useState(false);
+  const img = useRef<HTMLImageElement>(null);
+  // a foto pode terminar de carregar antes da hidratação (cache): confere no mount
+  useEffect(() => { if (img.current?.complete && img.current.naturalWidth) setCarregou(true); }, [imagem]);
   const usarFoto = imagem && !erro;
   return (
     <div className={cn('relative overflow-hidden bg-blush', className)}>
       {usarFoto ? (
         // eslint-disable-next-line @next/next/no-img-element -- fotos locais ou Cloudinary, tamanho definido pelo contêiner
         <img
+          ref={img}
           src={imagem}
           alt={alt}
           loading={prioridade ? 'eager' : 'lazy'}
           decoding="async"
           onLoad={() => setCarregou(true)}
           onError={() => setErro(true)}
-          className={cn('h-full w-full object-cover transition-[transform,opacity,filter] duration-[1400ms] ease-out group-hover:scale-[1.06]', carregou ? 'opacity-100 blur-0' : 'opacity-0 blur-md')}
+          style={{ transition: 'opacity .6s ease-out, filter .6s ease-out, transform 1.4s ease-out' }}
+          className={cn('h-full w-full object-cover group-hover:scale-[1.06]', carregou ? 'opacity-100 blur-0' : 'opacity-0 blur-md')}
         />
       ) : (
         <ArteArranjo seed={seed} flores={flores} paleta={paleta} forma={forma} fundo={fundo} titulo={alt} className="h-full w-full transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]" />
