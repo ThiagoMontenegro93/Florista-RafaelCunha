@@ -1,4 +1,5 @@
 import type { SVGProps } from 'react';
+import { RamoCrescendo } from './Oficio';
 
 /** Ramo de eucalipto em line art dourada — usado como divisor de seções. */
 export function RamoEucalipto({ className = '', ...p }: SVGProps<SVGSVGElement>) {
@@ -15,14 +16,9 @@ export function RamoEucalipto({ className = '', ...p }: SVGProps<SVGSVGElement>)
   );
 }
 
+/** Divisor vivo: ramo que cresce e desabrocha ao entrar na tela. */
 export function Divisor({ className = '' }: { className?: string }) {
-  return (
-    <div className={`flex items-center justify-center gap-4 py-2 ${className}`}>
-      <span className="h-px w-16 bg-gradient-to-r from-transparent to-ouro/60" />
-      <RamoEucalipto className="h-6 w-40" />
-      <span className="h-px w-16 bg-gradient-to-l from-transparent to-ouro/60" />
-    </div>
-  );
+  return <RamoCrescendo className={className} />;
 }
 
 /** Selo de cera dourado "Atelier Floral". */

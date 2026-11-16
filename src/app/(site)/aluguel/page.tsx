@@ -38,7 +38,7 @@ export default function AluguelPage() {
               <p className={cn('mt-3 text-sm', livre === 0 ? 'text-rosa' : 'text-salvia')} data-livre={livre}>{periodoOk ? (livre === 0 ? 'Indisponível no período' : `${livre} disponível(is) no período`) : `Acervo: ${p.estoque} un.`}</p>
               <div className="mt-auto flex items-center gap-2 pt-4">
                 <select className="campo w-20" aria-label="Quantidade" value={q} disabled={!periodoOk || livre === 0} onChange={(e) => setQtd({ ...qtd, [p.id]: +e.target.value })}>{Array.from({ length: Math.max(1, livre) }, (_, i) => i + 1).map((n) => <option key={n}>{n}</option>)}</select>
-                <button className="btn-ouro flex-1 !px-3" disabled={!periodoOk || livre === 0} onClick={() => { set('carrinho', (c) => [...c, itemServico({ tipo: 'aluguel', id: p.id, nome: `Aluguel · ${p.nome}`, emoji: p.emoji, preco: aluguel + caucao, detalhe: `${q} un. · ${dataBR(inicio)} a ${dataBR(fim)} · ${brl(aluguel)} + caução ${brl(caucao)} (devolvida)`, data: inicio, meta: { qtd: q, inicio, fim, caucao } })]); abrirCarrinho(true); }}>
+                <button data-petalas className="btn-ouro flex-1 !px-3" disabled={!periodoOk || livre === 0} onClick={() => { set('carrinho', (c) => [...c, itemServico({ tipo: 'aluguel', id: p.id, nome: `Aluguel · ${p.nome}`, emoji: p.emoji, preco: aluguel + caucao, detalhe: `${q} un. · ${dataBR(inicio)} a ${dataBR(fim)} · ${brl(aluguel)} + caução ${brl(caucao)} (devolvida)`, data: inicio, meta: { qtd: q, inicio, fim, caucao } })]); abrirCarrinho(true); }}>
                   {periodoOk ? `Reservar · ${brl(aluguel + caucao)}` : 'Escolha as datas'}
                 </button>
               </div>

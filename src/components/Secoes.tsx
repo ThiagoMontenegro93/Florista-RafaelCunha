@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Icone, RetratoRafael, Petalas, SeloCera, Divisor } from './Ornamentos';
+import { Icone, RetratoRafael, SeloCera, Divisor } from './Ornamentos';
+import { PetalasVivas, FitaDourada } from './Oficio';
 import { PORTFOLIO, REVIEWS } from '@/data/portfolio';
 import { PALETAS, PRODUTOS, type Produto } from '@/data/produtos';
 import { ProductCard } from './ProductCard';
@@ -26,13 +27,14 @@ export function Hero() {
         <div className="absolute -right-32 top-24 h-[480px] w-[480px] animate-aurora rounded-full bg-rosa/10 blur-[120px] [animation-delay:-6s]" />
         <div className="grade absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
       </div>
-      <Petalas />
+      <PetalasVivas />
       <div className="secao relative grid items-center gap-14 pb-12 pt-10 lg:grid-cols-[1.08fr_1fr] lg:pb-20 lg:pt-16">
         <div className="animate-surgir">
           <p className="kicker">Alta floricultura · Rio de Janeiro</p>
           <h1 className="mt-6 font-serif text-[56px] font-light leading-[0.9] sm:text-[80px] xl:text-[96px]">
             Flores que <br /><em className="texto-ouro font-light">guardam memórias</em>
           </h1>
+          <FitaDourada className="-mt-1 h-8 w-[min(380px,80vw)] sm:h-10 sm:w-[440px]" />
           <p className="mt-7 max-w-lg text-[16px] leading-relaxed text-marrom/70">Buquês de noiva, igrejas e mesas assinadas, feitos à mão no ateliê com flores brasileiras da estação e sem espuma floral. Do primeiro rascunho ao último laço, quem cuida é o Rafael.</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link href="/loja" className="btn-ouro !px-8 !py-3.5">Encomendar flores</Link>

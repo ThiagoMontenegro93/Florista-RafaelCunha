@@ -41,7 +41,7 @@ function CardPlano({ p, onEscolher, ciclo }: { p: Plano; onEscolher?: (ciclo: nu
       ) : <p className="mt-4 text-sm text-marrom/40">Nenhum ciclo disponível no momento.</p>}
       <ul className="mt-4 flex-1 space-y-2 text-sm">{p.itens.map((i) => <li key={i} className="flex gap-2"><span className="text-salvia">✿</span>{i}</li>)}</ul>
       {onEscolher ? (
-        <button disabled={!atual} className="btn-ouro mt-6" onClick={() => atual && onEscolher(atual.dias)}>Assinar {p.nome}</button>
+        <button data-petalas disabled={!atual} className="btn-ouro mt-6" onClick={() => atual && onEscolher(atual.dias)}>Assinar {p.nome}</button>
       ) : (
         <Link href={`/assinaturas?plano=${p.id}`} className="btn-ouro mt-6">Assinar {p.nome}</Link>
       )}

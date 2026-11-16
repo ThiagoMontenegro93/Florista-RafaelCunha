@@ -164,7 +164,7 @@ export function CustomizeModal({ produto, onClose }: { produto: Produto; onClose
             {passo < 4 ? (
               <button className="btn-ouro flex-1" onClick={() => setPasso(passo + 1)}>Continuar</button>
             ) : (
-              <button className="btn-ouro flex-1" onClick={adicionar}>Adicionar ao Atelier</button>
+              <button data-petalas className="btn-ouro flex-1" onClick={adicionar}>Adicionar ao Atelier</button>
             )}
           </div>
         </div>

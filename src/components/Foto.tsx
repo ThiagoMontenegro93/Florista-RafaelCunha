@@ -41,7 +41,7 @@ export function FotoArranjo({ imagem, alt, seed, flores, paleta, forma, fundo, c
           onLoad={() => setCarregou(true)}
           onError={() => setErro(true)}
           style={{ transition: 'opacity .6s ease-out, filter .6s ease-out, transform 1.4s ease-out' }}
-          className={cn('h-full w-full object-cover group-hover:scale-[1.06]', carregou ? 'opacity-100 blur-0' : 'opacity-0 blur-md')}
+          className={cn('foto-viva h-full w-full object-cover group-hover:scale-[1.06]', carregou ? 'opacity-100 blur-0' : 'opacity-0 blur-md')}
         />
       ) : (
         <ArteArranjo seed={seed} flores={flores} paleta={paleta} forma={forma} fundo={fundo} titulo={alt} className="h-full w-full transition-transform duration-[1400ms] ease-out group-hover:scale-[1.05]" />

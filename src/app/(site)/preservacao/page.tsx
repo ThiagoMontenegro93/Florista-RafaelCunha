@@ -40,7 +40,7 @@ export default function PreservacaoPage() {
             <p className="mt-2 flex-1 text-sm text-marrom/70">{p.descricao}</p>
             <p className="mt-3 text-xs uppercase tracking-widest text-marrom/50">Pronto em {p.prazo}</p>
             <p className="texto-ouro mt-1 font-serif text-3xl">{brl(p.preco)}</p>
-            <button className={cn('mt-4', add === p.id ? 'btn-linha' : 'btn-ouro')} onClick={() => adicionar(p)}>{add === p.id ? 'Adicionado ✓' : 'Eternizar meu buquê'}</button>
+            <button data-petalas className={cn('mt-4', add === p.id ? 'btn-linha' : 'btn-ouro')} onClick={() => adicionar(p)}>{add === p.id ? 'Adicionado ✓' : 'Eternizar meu buquê'}</button>
           </article>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Hero, BuscaInteligente, PortfolioGrid, LojaGrid, Confianca, Sobre, InstagramVivo } from '@/components/Secoes';
 import { Divisor } from '@/components/Ornamentos';
+import { ProcessoOficio } from '@/components/Oficio';
 import { PreVendaBanner, ServicosAtelie } from '@/components/Servicos';
 import { PRODUTOS } from '@/data/produtos';
 import { FlorTeaser } from './flores/FloresExplorer';
@@ -40,6 +41,9 @@ export default function Home() {
         </div>
         <LojaGrid produtos={destaques} />
       </section>
+
+      <ProcessoOficio />
+      <Divisor />
 
       <ServicosAtelie />
       <FlorTeaser />

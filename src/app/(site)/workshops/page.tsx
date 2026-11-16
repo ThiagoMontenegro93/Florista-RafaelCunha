@@ -32,7 +32,7 @@ export default function WorkshopsPage() {
               <p className="texto-ouro mt-2 font-serif text-3xl">{brl(w.preco)}</p>
               <div className="mt-4 flex items-center gap-2">
                 <select className="campo w-20" aria-label="Ingressos" disabled={vagas === 0} value={q} onChange={(e) => setQtd({ ...qtd, [w.id]: +e.target.value })}>{Array.from({ length: Math.max(1, Math.min(4, vagas)) }, (_, i) => i + 1).map((n) => <option key={n}>{n}</option>)}</select>
-                <button className="btn-ouro flex-1" disabled={vagas === 0} onClick={() => { set('carrinho', (c) => [...c, itemServico({ tipo: 'workshop', id: w.id, nome: `Workshop · ${w.nome}`, emoji: w.emoji, preco: w.preco * q, detalhe: `${q} ingresso(s) · ${dataBR(w.data)} às ${w.hora}`, data: w.data, meta: { qtd: q } })]); abrirCarrinho(true); }}>{vagas === 0 ? 'Lotado' : 'Comprar ingresso'}</button>
+                <button data-petalas className="btn-ouro flex-1" disabled={vagas === 0} onClick={() => { set('carrinho', (c) => [...c, itemServico({ tipo: 'workshop', id: w.id, nome: `Workshop · ${w.nome}`, emoji: w.emoji, preco: w.preco * q, detalhe: `${q} ingresso(s) · ${dataBR(w.data)} às ${w.hora}`, data: w.data, meta: { qtd: q } })]); abrirCarrinho(true); }}>{vagas === 0 ? 'Lotado' : 'Comprar ingresso'}</button>
               </div>
             </article>
           );
