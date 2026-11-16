@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { EXTRAS, PALETAS, TAMANHOS, type Produto } from '@/data/produtos';
+import { EXTRAS, PALETAS, TAMANHOS, fotoProduto, formaProduto, type Produto } from '@/data/produtos';
+import { FotoArranjo } from './Foto';
 import { useAtelie } from '@/lib/store';
 import { brl, cn } from '@/lib/format';
 import { Calendario } from './Calendario';
@@ -46,9 +47,12 @@ export function CustomizeModal({ produto, onClose }: { produto: Produto; onClose
       <div className="moldura flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden bg-creme animate-surgir" onClick={(e) => e.stopPropagation()}>
         <div className="border-b border-areia p-6 pb-4">
           <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="kicker">Personalizar</p>
-              <h3 className="text-3xl">{produto.emoji} {produto.nome}</h3>
+            <div className="flex items-center gap-4">
+              <FotoArranjo imagem={fotoProduto(produto)} alt={produto.nome} seed={produto.id} flores={produto.flores} paleta={paleta} forma={formaProduto(produto)} fundo={produto.gradiente} className="h-24 w-20 shrink-0 rounded-2xl border border-ouro/40" />
+              <div>
+                <p className="kicker">Personalizar</p>
+                <h3 className="text-3xl leading-tight">{produto.nome}</h3>
+              </div>
             </div>
             <button onClick={onClose} aria-label="Fechar" className="text-marrom/50">✕</button>
           </div>
@@ -160,7 +164,7 @@ export function CustomizeModal({ produto, onClose }: { produto: Produto; onClose
             {passo < 4 ? (
               <button className="btn-ouro flex-1" onClick={() => setPasso(passo + 1)}>Continuar</button>
             ) : (
-              <button className="btn-ouro flex-1" onClick={adicionar}>Adicionar ao Atelier</button>
+              <button data-petalas className="btn-ouro flex-1" onClick={adicionar}>Adicionar ao Atelier</button>
             )}
           </div>
         </div>

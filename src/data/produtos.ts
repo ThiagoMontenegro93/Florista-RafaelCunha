@@ -1,3 +1,6 @@
+import type { Forma } from '@/components/Arte';
+import { FOTOS } from './fotos';
+
 export type Categoria = 'Noiva' | 'Casamento' | 'Centro Mesa' | 'Namorados' | 'Igreja' | 'Aniversário' | 'Presente';
 export type Paleta = 'Branco puro' | 'Amarelo+Azul assinatura' | 'Rosa queimado' | 'Marsala' | 'Roxo orquídea' | 'Vermelho paixão';
 
@@ -13,9 +16,22 @@ export type Produto = {
   emoji: string;
   gradiente: [string, string];
   flores: string[]; // slugs de FLORES
+  /** Foto real do arranjo (/fotos/... ou URL do Cloudinary). Sem foto, o site desenha a arte botânica. */
+  imagem?: string;
   badge?: 'BEST SELLER' | 'Entrega a combinar' | 'Novo' | 'Sinal 50%';
   sinal?: boolean;
 };
+
+
+/** Como o arranjo é apresentado na arte (buquê amarrado, vaso, caixa…). */
+export function formaProduto(p: Pick<Produto, 'id' | 'categoria'>): Forma {
+  const especiais: Record<string, Forma> = { 'cascata-orquideas': 'cascata', 'namorados-coracao': 'coracao', 'box-namorados': 'caixa', 'cesta-cafe': 'cesta', 'aniversario-girassois': 'vaso' };
+  if (especiais[p.id]) return especiais[p.id];
+  return ({ 'Centro Mesa': 'vaso-baixo', Igreja: 'pedestal', Aniversário: 'vaso', Presente: 'cesta' } as Record<string, Forma>)[p.categoria] ?? 'buque';
+}
+
+/** Foto cadastrada para o produto (manifesto em src/data/fotos.ts). */
+export const fotoProduto = (p: Pick<Produto, 'id' | 'imagem'>) => p.imagem || FOTOS[p.id];
 
 export const PRODUTOS: Produto[] = [
   { id: 'bouquet-santa-ignez', nome: 'Bouquet Santa Ignêz Voto Pureza', categoria: 'Noiva', ocasioes: ['Noiva', 'Casamento', 'Igreja'], paletas: ['Branco puro'], preco: 380, prazo: '24h', descricao: 'Rosas brancas, lisianthus e eucalipto baby blue, amarração em fita cetim marfim.', emoji: '🤍', gradiente: ['#FFFFFF', '#F5E6D3'], flores: ['rosa', 'lisianthus', 'eucalipto'], badge: 'Entrega a combinar' },

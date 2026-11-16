@@ -5,12 +5,19 @@ import { useMemo, useState } from 'react';
 import { BIOMAS, FLORES, type Bioma, type Flor } from '@/data/flores';
 import { MapaBrasil } from '@/components/MapaBrasil';
 import { MESES, cn } from '@/lib/format';
+import { ArteFlor } from '@/components/Arte';
+import { FOTOS } from '@/data/fotos';
 
 function CardFlor({ f }: { f: Flor }) {
   return (
-    <article className="moldura overflow-hidden">
-      <div className="relative flex h-36 items-center justify-center text-6xl" style={{ background: `radial-gradient(90% 90% at 30% 20%, ${f.aquarela[0]}55, transparent 60%), radial-gradient(80% 80% at 80% 80%, ${f.aquarela[1]}66, transparent 70%), rgb(var(--halo))` }}>
-        {f.emoji}
+    <article className="moldura group overflow-hidden">
+      <div className="relative h-44 overflow-hidden" style={{ background: `radial-gradient(90% 90% at 30% 20%, ${f.aquarela[0]}55, transparent 60%), radial-gradient(80% 80% at 80% 80%, ${f.aquarela[1]}66, transparent 70%), rgb(var(--halo))` }}>
+        {FOTOS[`flor-${f.slug}`] ? (
+          // eslint-disable-next-line @next/next/no-img-element -- foto local da flor
+          <img src={FOTOS[`flor-${f.slug}`]} alt={f.nome} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
+        ) : (
+          <ArteFlor slug={f.slug} cores={f.aquarela} titulo={f.nome} className="h-full w-full transition duration-700 group-hover:scale-105" />
+        )}
         <span className={cn('pill absolute right-3 top-3 text-[10px]', f.trabalhamos ? 'bg-salvia text-tinta' : 'border border-ouro/50 bg-vidro/80 text-ouro')}>{f.trabalhamos ? 'Trabalhamos' : 'Sob encomenda'}</span>
       </div>
       <div className="space-y-2 p-5 text-sm">

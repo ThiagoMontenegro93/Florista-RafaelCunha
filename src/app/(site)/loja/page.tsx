@@ -12,7 +12,7 @@ export default function LojaPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdProdutos(PRODUTOS)) }} />
       <p className="kicker">Loja de encomendas</p>
       <h1 className="titulo-secao mt-2">Arranjos feitos <em className="texto-ouro">à mão</em></h1>
-      <p className="mb-8 mt-4 max-w-2xl text-marrom/75">Investimento a partir de R$ 290. Preços sem frete: a entrega é combinada com você no WhatsApp depois do pedido.</p>
+      <p className="mb-8 mt-4 max-w-2xl text-marrom/75">Investimento a partir de R$ 290. Preços sem frete: a entrega é combinada com você no WhatsApp depois do pedido. Fotos ilustrativas: cada arranjo é único, feito com a mesma paleta e as mesmas flores.</p>
       <Suspense><LojaFiltrada /></Suspense>
     </div>
   );

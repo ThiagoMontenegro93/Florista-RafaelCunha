@@ -49,7 +49,7 @@ export default function PreVendaPage() {
           const pct = Math.min(100, ((cap - vagas) / cap) * 100);
           return (
             <article key={p.id} className="moldura flex flex-col p-6 text-center">
-              <span className="text-5xl">{p.emoji}</span>
+              <span className="medalhao">{p.emoji}</span>
               <p className="kicker mt-3">{p.nome} · entrega {dataBR(p.data)}</p>
               <h2 className="mt-1 font-serif text-2xl">{p.produto}</h2>
               <p className="mt-2 flex-1 text-sm text-marrom/70">{p.descricao}</p>
@@ -62,7 +62,7 @@ export default function PreVendaPage() {
               {!esgotado ? (
                 <div className="mt-4 flex items-center gap-2">
                   <select className="campo w-20" value={q} onChange={(e) => setQtd({ ...qtd, [p.id]: +e.target.value })} aria-label="Quantidade">{Array.from({ length: Math.min(5, vagas) }, (_, i) => i + 1).map((n) => <option key={n}>{n}</option>)}</select>
-                  <button className="btn-ouro flex-1" onClick={() => { set('carrinho', (c) => [...c, itemServico({ tipo: 'prevenda', id: p.id, nome: `${p.produto} (${p.nome})`, emoji: p.emoji, preco: p.preco * q, detalhe: `${q}× · entrega em ${dataBR(p.data)}`, data: p.data, meta: { qtd: q } })]); abrirCarrinho(true); }}>Garantir o meu</button>
+                  <button data-petalas className="btn-ouro flex-1" onClick={() => { set('carrinho', (c) => [...c, itemServico({ tipo: 'prevenda', id: p.id, nome: `${p.produto} (${p.nome})`, emoji: p.emoji, preco: p.preco * q, detalhe: `${q}× · entrega em ${dataBR(p.data)}`, data: p.data, meta: { qtd: q } })]); abrirCarrinho(true); }}>Garantir o meu</button>
                 </div>
               ) : (
                 <button className="btn-linha mt-4" onClick={() => { setLista(p.id); setOk(''); }}>Entrar na lista de espera</button>

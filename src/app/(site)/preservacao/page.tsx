@@ -35,12 +35,12 @@ export default function PreservacaoPage() {
       <div className="mt-8 grid gap-6 md:grid-cols-3">
         {PRESERVACAO.map((p) => (
           <article key={p.id} className="moldura flex flex-col p-6 text-center transition hover:-translate-y-1 hover:shadow-brilho">
-            <span className="text-5xl">{p.emoji}</span>
+            <span className="medalhao">{p.emoji}</span>
             <h2 className="mt-3 font-serif text-2xl">{p.nome}</h2>
             <p className="mt-2 flex-1 text-sm text-marrom/70">{p.descricao}</p>
             <p className="mt-3 text-xs uppercase tracking-widest text-marrom/50">Pronto em {p.prazo}</p>
             <p className="texto-ouro mt-1 font-serif text-3xl">{brl(p.preco)}</p>
-            <button className={cn('mt-4', add === p.id ? 'btn-linha' : 'btn-ouro')} onClick={() => adicionar(p)}>{add === p.id ? 'Adicionado ✓' : 'Eternizar meu buquê'}</button>
+            <button data-petalas className={cn('mt-4', add === p.id ? 'btn-linha' : 'btn-ouro')} onClick={() => adicionar(p)}>{add === p.id ? 'Adicionado ✓' : 'Eternizar meu buquê'}</button>
           </article>
         ))}
       </div>

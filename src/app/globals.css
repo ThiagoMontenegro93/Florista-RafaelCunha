@@ -126,6 +126,8 @@
   .campo { @apply w-full rounded-xl border border-areia bg-veu/60 px-4 py-2.5 text-sm text-marrom placeholder:text-marrom/30 transition focus:border-ouro focus:outline-none focus:ring-2 focus:ring-ouro/20; }
   .rotulo { @apply mb-1.5 block text-[10px] font-medium uppercase tracking-[0.22em] text-champanhe/60; }
   .etiqueta { @apply inline-flex items-center rounded-full border border-champanhe/30 bg-veu/70 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.24em] text-champanhe backdrop-blur; }
+  /* medalhão dourado para ícones/emojis dos serviços */
+  .medalhao { @apply flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-champanhe/30 bg-gradient-to-br from-ouro/25 via-veu/40 to-transparent text-3xl shadow-brilho; }
   .pill { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium; }
   .secao { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
   .titulo-secao { @apply font-serif text-4xl font-light leading-[1.02] sm:text-5xl lg:text-6xl; }
@@ -149,10 +151,73 @@
   .lg\:grid-cols-\[1fr_400px\] { display: block !important; }
 }
 
+/* revelar ao rolar (Foto.tsx › Revelar) */
+.revelar { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
+.revelar.revelado { opacity: 1; transform: none; }
+@media print { .revelar { opacity: 1 !important; transform: none !important; } }
+
 @media (prefers-reduced-motion: reduce) {
   .petala { display: none; }
+  .revelar { opacity: 1; transform: none; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+
+/* ───── Efeitos do ofício (components/Oficio.tsx) ───── */
+/* pétalas vivas: queda + vento + giro 3D em camadas separadas */
+.pv-queda { position: absolute; top: -6%; animation: pv-cair linear infinite; will-change: transform; }
+.pv-vento { display: block; animation: pv-vento ease-in-out infinite alternate; }
+.pv-giro { display: block; animation: pv-giro linear infinite; filter: drop-shadow(0 2px 3px rgb(var(--sombra) / .18)); }
+.petalas-vivas.pausado * { animation-play-state: paused; }
+@keyframes pv-cair { 0% { transform: translateY(0); opacity: 0; } 8% { opacity: .9; } 85% { opacity: .85; } 100% { transform: translateY(105vh); opacity: 0; } }
+@keyframes pv-vento { from { transform: translateX(-28px); } to { transform: translateX(28px); } }
+@keyframes pv-giro { 0% { transform: rotate3d(1, .4, .2, 0deg); } 100% { transform: rotate3d(1, .4, .2, 360deg); } }
+
+/* ramo que cresce */
+.ramo .caule { fill: none; stroke: rgb(var(--ouro)); stroke-width: 1.1; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.5s cubic-bezier(.4,.1,.2,1); }
+.ramo .folha { fill: rgb(var(--ouro) / .16); stroke: rgb(var(--ouro)); stroke-width: .9; transform-box: view-box; transform-origin: 0 0; transform: scale(0); transition: transform .8s cubic-bezier(.3,1.5,.5,1); }
+.ramo .nervura { fill: none; stroke-width: .6; }
+.ramo .petalo { fill: rgb(var(--rosa) / .35); stroke: rgb(var(--ouro)); stroke-width: .9; transform-box: view-box; transform-origin: 0 0; transform: scale(0) rotate(-40deg); transition: transform 1s cubic-bezier(.3,1.4,.5,1); }
+.ramo .miolo { fill: rgb(var(--ouro)); transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .6s 1.7s cubic-bezier(.3,1.6,.5,1); }
+.ramo .flor { transform-box: fill-box; transform-origin: center; }
+.ramo.vivo .caule { stroke-dashoffset: 0; }
+.ramo.vivo .folha, .ramo.vivo .miolo { transform: scale(1); }
+.ramo.vivo .petalo { transform: none; }
+.ramo.vivo .flor { animation: respirar 6s 2.4s ease-in-out infinite; }
+@keyframes respirar { 0%,100% { transform: rotate(0) scale(1); } 50% { transform: rotate(8deg) scale(1.06); } }
+
+/* fita dourada desenhada à mão */
+.fita path { fill: none; stroke: url(#fita-ouro); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: tracar 2.6s .7s cubic-bezier(.5,.1,.2,1) forwards; }
+@keyframes tracar { to { stroke-dashoffset: 0; } }
+
+/* do campo ao laço */
+.medalhao-oficio { position: relative; display: flex; height: 7rem; width: 7rem; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid rgb(var(--ouro) / .45); background: radial-gradient(circle at 35% 30%, rgb(var(--vidro)), rgb(var(--halo))); z-index: 1; box-shadow: 0 0 40px -10px rgb(var(--brilho) / .6); transition: transform .5s cubic-bezier(.3,1.4,.5,1), box-shadow .5s; }
+.etapa:hover .medalhao-oficio { transform: translateY(-4px) rotate(-4deg); box-shadow: 0 0 50px -6px rgb(var(--brilho) / .8); }
+.medalhao-oficio .tracar { fill: none; stroke: #A8844A; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s cubic-bezier(.5,.1,.2,1) .35s; }
+.medalhao-oficio .pino { fill: #A8844A; }
+[data-tema='onix'] .medalhao-oficio .tracar { stroke: #E3C78F; }
+[data-tema='onix'] .medalhao-oficio .pino { fill: #E3C78F; }
+.revelado .medalhao-oficio .tracar { stroke-dashoffset: 0; }
+.tesoura .lamina-a, .tesoura .lamina-b { transform-box: view-box; transform-origin: 32px 34px; }
+.revelado .tesoura .lamina-a { animation: cortar-a 1.1s 2.1s ease-in-out 2; }
+.revelado .tesoura .lamina-b { animation: cortar-b 1.1s 2.1s ease-in-out 2; }
+.etapa:hover .tesoura .lamina-a { animation: cortar-a .8s ease-in-out infinite; }
+.etapa:hover .tesoura .lamina-b { animation: cortar-b .8s ease-in-out infinite; }
+@keyframes cortar-a { 0%,100% { transform: rotate(0); } 50% { transform: rotate(-16deg); } }
+@keyframes cortar-b { 0%,100% { transform: rotate(0); } 50% { transform: rotate(16deg); } }
+.caule-oficio { fill: none; stroke: rgb(var(--ouro) / .55); stroke-width: 1.2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s cubic-bezier(.4,.1,.2,1); }
+.oficio.vivo .caule-oficio { stroke-dashoffset: 0; }
+
+/* fotos dos arranjos "respiram" de leve ao passar o mouse, como flor ao vento */
+@keyframes balancar { 0%,100% { transform: scale(1.06) rotate(0); } 50% { transform: scale(1.06) rotate(.6deg); } }
+.group:hover .foto-viva { animation: balancar 3.6s 1.4s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .petalas-vivas { display: none; }
+  .ramo .caule, .fita path, .medalhao-oficio .tracar, .caule-oficio { stroke-dashoffset: 0 !important; animation: none !important; }
+  .ramo .folha, .ramo .petalo, .ramo .miolo { transform: none !important; }
+}
+@media print { .petalas-vivas { display: none !important; } }
 
 /* Rosé & Azul Pérola: títulos em azul perolado com brilho lento (o ouro continua nos destaques) */
 [data-tema='rose-azul'] :is(h1, h2, h3, .titulo-secao):not(.texto-ouro) {

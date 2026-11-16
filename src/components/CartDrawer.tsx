@@ -1,5 +1,8 @@
 'use client';
 
+import { PRODUTOS, fotoProduto, formaProduto } from '@/data/produtos';
+import { FotoArranjo } from './Foto';
+
 import Link from 'next/link';
 import { useState } from 'react';
 import { useAtelie, descontoCupom } from '@/lib/store';
@@ -25,7 +28,7 @@ export function CartDrawer() {
           {carrinho.length === 0 && <p className="py-16 text-center text-marrom/60">Seu atelier está vazio. <Link className="text-ouro underline" href="/loja" onClick={() => abrirCarrinho(false)}>Ver a loja</Link></p>}
           {carrinho.map((i) => (
             <div key={i.uid} className="flex gap-3 rounded-2xl border border-areia bg-vidro p-3">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-ouro/50 bg-blush text-2xl">{i.emoji}</div>
+              <Miniatura produtoId={i.produtoId} emoji={i.emoji} paleta={i.paleta} />
               <div className="min-w-0 flex-1 text-sm">
                 <p className="font-serif text-lg leading-tight">{i.nome}</p>
                 {i.detalhe ? <p className="text-xs text-marrom/60">{i.detalhe}</p> : (
@@ -61,4 +64,10 @@ export function CartDrawer() {
       </aside>
     </div>
   );
+}
+
+export function Miniatura({ produtoId, emoji, paleta, className = 'h-16 w-14' }: { produtoId?: string; emoji: string; paleta?: string; className?: string }) {
+  const p = PRODUTOS.find((x) => x.id === produtoId);
+  if (!p) return <div className={`flex ${className} shrink-0 items-center justify-center rounded-xl border border-ouro/50 bg-blush text-2xl`}>{emoji}</div>;
+  return <FotoArranjo imagem={fotoProduto(p)} alt={p.nome} seed={p.id} flores={p.flores} paleta={paleta || p.paletas[0]} forma={formaProduto(p)} fundo={p.gradiente} className={`${className} shrink-0 rounded-xl border border-ouro/40`} />;
 }
