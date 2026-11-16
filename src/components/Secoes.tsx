@@ -12,58 +12,70 @@ import { DATAS_BLOQUEADAS } from '@/data/produtos';
 import { waLink, cn } from '@/lib/format';
 import { useAtelie } from '@/lib/store';
 import { InstagramEmbed } from './InstagramEmbed';
+import { FotoArranjo, Revelar } from './Foto';
+import { FOTOS } from '@/data/fotos';
 
 const VIDEO = process.env.NEXT_PUBLIC_HERO_VIDEO_URL;
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* aurora dourada + grade futurista */}
+      {/* aurora dourada + grade fina */}
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="absolute -left-40 -top-40 h-[560px] w-[560px] animate-aurora rounded-full bg-ouro/20 blur-[120px]" />
         <div className="absolute -right-32 top-24 h-[480px] w-[480px] animate-aurora rounded-full bg-rosa/10 blur-[120px] [animation-delay:-6s]" />
         <div className="grade absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]" />
       </div>
       <Petalas />
-      <div className="secao relative grid items-center gap-12 py-14 lg:grid-cols-[1.3fr_1fr] lg:py-24">
-        <div className="grid items-center gap-10 md:grid-cols-[230px_1fr]">
-          {/* Vídeo vertical (reel real da Santa Ignêz) com anel dourado girando */}
-          <div className="relative mx-auto w-56 overflow-hidden rounded-moldura p-[1.5px] shadow-brilho md:w-full">
-            <div className="absolute -inset-1/2 animate-girar [background:conic-gradient(from_0deg,transparent_0%,#EED9A8_10%,transparent_25%,transparent_50%,#C9A35F_60%,transparent_75%)]" aria-hidden />
-            <div className="relative aspect-[9/16] overflow-hidden rounded-[30px] bg-creme">
-              {VIDEO ? (
-                <video src={VIDEO} autoPlay muted loop playsInline className="h-full w-full object-cover" aria-label="Rafael decorando a Casa e Capela Santa Ignêz" />
-              ) : (
-                <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-[radial-gradient(circle_at_50%_30%,rgba(238,217,168,.25),transparent_60%),linear-gradient(180deg,rgb(var(--halo)),rgb(var(--creme)))] p-4 text-center">
-                  <span className="text-6xl drop-shadow-[0_0_20px_rgba(238,217,168,.5)]">⛪</span>
-                  <span className="font-serif text-lg leading-tight text-champanhe">Santa Ignêz<br /><em className="text-marrom/60">arco branco · 27/09</em></span>
-                  <a href="https://www.instagram.com/florista.rafaelcunha/" target="_blank" rel="noreferrer" className="text-[11px] tracking-wider text-ouro underline underline-offset-4">ver reel no Instagram</a>
-                </div>
-              )}
-              <span className="etiqueta absolute bottom-3 left-3"><span className="mr-1.5 h-1.5 w-1.5 animate-pulse rounded-full bg-rosa" />Reel real</span>
-            </div>
+      <div className="secao relative grid items-center gap-14 pb-12 pt-10 lg:grid-cols-[1.08fr_1fr] lg:pb-20 lg:pt-16">
+        <div className="animate-surgir">
+          <p className="kicker">Alta floricultura · Rio de Janeiro</p>
+          <h1 className="mt-6 font-serif text-[56px] font-light leading-[0.9] sm:text-[80px] xl:text-[96px]">
+            Flores que <br /><em className="texto-ouro font-light">guardam memórias</em>
+          </h1>
+          <p className="mt-7 max-w-lg text-[16px] leading-relaxed text-marrom/70">Buquês de noiva, igrejas e mesas assinadas, feitos à mão no ateliê com flores brasileiras da estação e sem espuma floral. Do primeiro rascunho ao último laço, quem cuida é o Rafael.</p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href="/loja" className="btn-ouro !px-8 !py-3.5">Encomendar flores</Link>
+            <Link href="/portfolio" className="btn-linha !py-3.5">Ver celebrações reais</Link>
           </div>
-          <div>
-            <p className="kicker">Viver com flores todos os dias</p>
-            <h1 className="mt-5 font-serif text-[54px] font-light leading-[0.92] sm:text-[72px] lg:text-[84px]">
-              Flores que <br /><em className="texto-ouro font-light">guardam memórias</em>
-            </h1>
-            <p className="mt-6 max-w-md text-[15px] leading-relaxed text-marrom/65">Alta floricultura no Rio de Janeiro. Buquês de noiva, igrejas e mesas assinadas, feitos à mão no ateliê com flores brasileiras e sem espuma floral.</p>
-            <div className="mt-7 flex items-center gap-4">
-              <RetratoRafael size={72} />
-              <div>
-                <p className="font-script text-3xl text-champanhe">Rafael Cunha</p>
-                <p className="text-sm text-marrom/70">320 celebrações · <span className="text-champanhe">4.9★</span> Google</p>
-              </div>
+          <div className="mt-10 flex items-center gap-4 border-t border-ouro/20 pt-6">
+            <RetratoRafael size={64} foto={FOTOS.rafael} />
+            <div>
+              <p className="font-script text-3xl leading-none text-champanhe">Rafael Cunha</p>
+              <p className="mt-1 text-sm text-marrom/70">Florista oficial da Casa e Capela Santa Ignêz</p>
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/loja" className="btn-ouro">Encomendar flores</Link>
-              <Link href="/portfolio" className="btn-linha">Ver celebrações reais</Link>
+            <div className="ml-auto hidden text-right sm:block">
+              <p className="tracking-[0.2em] text-champanhe">★★★★★</p>
+              <p className="text-xs text-marrom/60">4.9 no Google · 320 celebrações</p>
             </div>
           </div>
         </div>
-        <ConsulteData />
+
+        {/* janela em arco: foto/vídeo real do ateliê ou a arte do buquê assinatura */}
+        <div className="relative mx-auto w-full max-w-[460px] animate-surgir [animation-delay:.15s]">
+          <div className="absolute -inset-4 rounded-t-[999px] rounded-b-[40px] border border-ouro/30" aria-hidden />
+          <div className="relative overflow-hidden rounded-t-[999px] rounded-b-[32px] p-[1.5px] shadow-suave">
+            <div className="absolute -inset-1/2 animate-girar [background:conic-gradient(from_0deg,transparent_0%,#EED9A8_10%,transparent_25%,transparent_50%,#C9A35F_60%,transparent_75%)]" aria-hidden />
+            <div className="group relative aspect-[4/5] overflow-hidden rounded-t-[999px] rounded-b-[30px]">
+              {VIDEO ? (
+                <video src={VIDEO} autoPlay muted loop playsInline className="h-full w-full object-cover" aria-label="Rafael decorando a Casa e Capela Santa Ignêz" />
+              ) : (
+                <FotoArranjo imagem={FOTOS.hero} prioridade alt="Buquê assinatura do ateliê: lírios amarelos, hortênsias azuis e eucalipto" seed="hero-assinatura" flores={['hortensia-azul', 'lirio-amarelo', 'rosa', 'eucalipto']} paleta="Amarelo+Azul assinatura" forma="buque" fundo={['#FFF8EE', '#F1DDC4']} className="h-full w-full" />
+              )}
+            </div>
+          </div>
+          <SeloCera size={84} className="absolute -right-3 top-16 rotate-12 sm:-right-8" />
+          <a href="https://www.instagram.com/florista.rafaelcunha/" target="_blank" rel="noreferrer" className="moldura absolute -left-3 bottom-10 flex items-center gap-3 bg-creme/95 px-4 py-3 transition hover:-translate-y-0.5 sm:-left-10">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-ouro/30 to-transparent text-champanhe"><Icone nome="instagram" /></span>
+            <span className="text-left leading-tight"><span className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.25em] text-champanhe"><span className="h-1.5 w-1.5 animate-pulse rounded-full bg-rosa" />Reel real</span><span className="font-serif text-lg text-marrom">Santa Ignêz · arco branco</span></span>
+          </a>
+          <div className="moldura absolute -right-2 bottom-24 hidden bg-creme/95 px-4 py-3 text-center sm:block lg:-right-6">
+            <p className="texto-ouro font-serif text-3xl leading-none">0%</p>
+            <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-marrom/60">espuma floral</p>
+          </div>
+        </div>
       </div>
+      <div className="secao relative pb-12"><ConsulteData /></div>
       <Numeros />
       <PromessasEntrega />
     </section>
@@ -93,28 +105,29 @@ export function ConsulteData() {
     setR(b ? { livre: false, msg: 'Essa data já tem uma celebração reservada. Fale com o Rafael para ver se cabe mais uma em outra cidade.' } : { livre: true, msg: 'Data disponível! Reserve agora com o Rafael pelo WhatsApp.' });
   };
   return (
-    <form onSubmit={verificar} className="moldura relative bg-creme/95 p-7" id="consulte">
-      <SeloCera size={64} className="absolute -right-4 -top-6 rotate-12" />
-      <p className="kicker">Agenda {new Date().getFullYear()}/{new Date().getFullYear() + 1}</p>
-      <h2 className="mt-2 text-4xl">Consulte <em className="texto-ouro">sua data</em></h2>
-      <div className="mt-5 space-y-3">
-        <div><label className="rotulo" htmlFor="cd-nome">Nome</label><input id="cd-nome" required className="campo" value={f.nome} onChange={(e) => setF({ ...f, nome: e.target.value })} placeholder="Como podemos te chamar?" /></div>
-        <div><label className="rotulo" htmlFor="cd-data">Data do evento</label><input id="cd-data" type="date" required className="campo" value={f.data} onChange={(e) => setF({ ...f, data: e.target.value })} /></div>
-        <div className="grid grid-cols-2 gap-3">
+    <form onSubmit={verificar} className="moldura relative grid gap-6 bg-creme/95 p-6 lg:grid-cols-[230px_1fr] lg:items-center lg:p-8" id="consulte">
+      <div>
+        <p className="kicker">Agenda {new Date().getFullYear()}/{new Date().getFullYear() + 1}</p>
+        <h2 className="mt-2 text-4xl leading-none">Consulte <em className="texto-ouro">sua data</em></h2>
+        <p className="mt-2 text-xs text-marrom/60">Mais de 300 casamentos realizados no Rio de Janeiro</p>
+      </div>
+      <div>
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-[1.2fr_1fr_1.2fr_1fr_auto] xl:items-end">
+          <div><label className="rotulo" htmlFor="cd-nome">Nome</label><input id="cd-nome" required className="campo" value={f.nome} onChange={(e) => setF({ ...f, nome: e.target.value })} placeholder="Como podemos te chamar?" /></div>
+          <div><label className="rotulo" htmlFor="cd-data">Data do evento</label><input id="cd-data" type="date" required className="campo" value={f.data} onChange={(e) => setF({ ...f, data: e.target.value })} /></div>
           <div><label className="rotulo" htmlFor="cd-local">Local</label>
             <select id="cd-local" className="campo" value={f.local} onChange={(e) => setF({ ...f, local: e.target.value })}><option>Casa e Capela Santa Ignêz</option><option>Solar Real</option><option>Outro no RJ</option></select></div>
           <div><label className="rotulo" htmlFor="cd-tipo">Tipo</label>
             <select id="cd-tipo" className="campo" value={f.tipo} onChange={(e) => setF({ ...f, tipo: e.target.value })}><option>Igreja</option><option>Casamento</option><option>Namorados</option><option>Centro Mesa</option></select></div>
+          <button className="btn-ouro w-full sm:col-span-2 xl:col-span-1 xl:w-auto">Verificar disponibilidade</button>
         </div>
+        {r && (
+          <div className={cn('mt-4 flex flex-wrap items-center justify-between gap-2 rounded-xl p-3 text-sm animate-surgir', r.livre ? 'border border-salvia/30 bg-salvia/10 text-folha' : 'border border-rosa/30 bg-rosa/10 text-rosa')}>
+            {r.msg}
+            <a className="font-medium underline" target="_blank" rel="noreferrer" href={waLink(`Olá Rafael, sou ${f.nome}. Quero reservar ${f.data.split('-').reverse().join('/')} · ${f.tipo} · ${f.local}.`)}>Falar no WhatsApp →</a>
+          </div>
+        )}
       </div>
-      <button className="btn-ouro mt-5 w-full">Verificar disponibilidade</button>
-      {r && (
-        <div className={cn('mt-4 rounded-xl p-3 text-sm', r.livre ? 'border border-salvia/30 bg-salvia/10 text-folha' : 'border border-rosa/30 bg-rosa/10 text-rosa')}>
-          {r.msg}
-          <a className="mt-2 block font-medium underline" target="_blank" rel="noreferrer" href={waLink(`Olá Rafael, sou ${f.nome}. Quero reservar ${f.data.split('-').reverse().join('/')} · ${f.tipo} · ${f.local}.`)}>Falar no WhatsApp →</a>
-        </div>
-      )}
-      <p className="mt-4 text-center text-xs text-marrom/60">Mais de 300 casamentos realizados no Rio de Janeiro</p>
     </form>
   );
 }
@@ -161,25 +174,30 @@ export function BuscaInteligente({ compacta = false }: { compacta?: boolean }) {
 
 export function PortfolioGrid({ limite }: { limite?: number }) {
   return (
-    <div className="grid gap-8 md:grid-cols-2">
-      {PORTFOLIO.slice(0, limite).map((p, i) => (
-        <article key={p.id} className={cn('group', i % 2 === 1 && 'md:mt-16')}>
-          <div className="moldura relative aspect-[4/5] overflow-hidden p-3">
-            <div className="flex h-full w-full items-center justify-center rounded-[24px] text-8xl transition duration-700 group-hover:scale-[1.04]" style={{ background: `radial-gradient(circle at 30% 25%, ${p.gradiente[0]}88, transparent 55%), radial-gradient(circle at 75% 80%, ${p.gradiente[1]}aa, transparent 60%), linear-gradient(160deg,rgb(var(--halo)),rgb(var(--creme)))` }}>
-              {p.imagem ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={p.imagem} alt={`${p.titulo} — ${p.local}`} className="h-full w-full rounded-[24px] object-cover" />
-              ) : p.emoji}
+    <div className="grid gap-x-10 gap-y-14 md:grid-cols-2">
+      {PORTFOLIO.slice(0, limite).map((p, i) => {
+        const foto = p.imagem || FOTOS[p.id];
+        return (
+          <Revelar as="article" key={p.id} atraso={(i % 2) * 120} className={cn('group', i % 2 === 1 && 'md:mt-24')}>
+            <div className="moldura relative overflow-hidden p-2.5">
+              <FotoArranjo imagem={foto} alt={`${p.titulo} — ${p.local}`} seed={p.id} flores={p.flores} paleta={p.paleta} forma={p.forma} fundo={p.gradiente as [string, string]} className="aspect-[4/5] rounded-[26px]" />
+              <div className="pointer-events-none absolute inset-x-2.5 bottom-2.5 rounded-b-[26px] bg-gradient-to-t from-overlay/60 via-overlay/15 to-transparent p-6 pt-20 text-white">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-white/85">{p.tipo} · {p.data}</p>
+                <p className="mt-1 font-serif text-2xl text-white">{p.local}</p>
+              </div>
+              {!foto && <span className="etiqueta absolute right-5 top-5" title="A foto real deste evento entra aqui">Ilustração</span>}
             </div>
-            <div className="absolute left-6 top-6 flex flex-wrap gap-2">
-              <span className="etiqueta">{p.tipo}</span><span className="etiqueta">{p.local}</span><span className="etiqueta">{p.data}</span>
+            <div className="mt-5 flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-3xl transition group-hover:text-champanhe">{p.titulo}</h3>
+                <p className="mt-1 max-w-md text-sm text-marrom/60">{p.descricao}</p>
+              </div>
+              <span className="font-serif text-4xl text-ouro/40">{String(i + 1).padStart(2, '0')}</span>
             </div>
-          </div>
-          <h3 className="mt-5 text-3xl transition group-hover:text-champanhe">{p.titulo}</h3>
-          <p className="mt-1 text-sm text-marrom/60">{p.descricao}</p>
-          {'instagram' in p && p.instagram && <a href={p.instagram} target="_blank" rel="noreferrer" className="mt-1 inline-block text-sm text-ouro underline">ver post original</a>}
-        </article>
-      ))}
+            {'instagram' in p && p.instagram && <a href={p.instagram} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm text-ouro underline underline-offset-4">ver post original</a>}
+          </Revelar>
+        );
+      })}
     </div>
   );
 }
@@ -226,10 +244,11 @@ export function Confianca() {
         </div>
       </div>
       <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
-        {[['🌿', 'Arranjos sem espuma floral', 'Sustentável de verdade'], ['💍', '320 noivas felizes', 'Celebrações reais'], ['⏱️', 'Entrega em 3h combinada', 'No horário que você escolher'], ['🔒', 'Mercado Pago Seguro', 'Pix e cartão parcelado']].map(([e, t, d]) => (
-          <div key={t} className="moldura p-5 text-center transition hover:-translate-y-1 hover:shadow-brilho">
-            <span className="text-2xl">{e}</span><p className="mt-1 font-serif text-lg leading-tight">{t}</p><p className="text-xs text-marrom/60">{d}</p>
-          </div>
+        {([['folha', 'Arranjos sem espuma floral', 'Sustentável de verdade'], ['aneis', '320 noivas felizes', 'Celebrações reais'], ['relogio', 'Entrega em 3h combinada', 'No horário que você escolher'], ['cadeado', 'Mercado Pago Seguro', 'Pix e cartão parcelado']] as const).map(([e, t, d], k) => (
+          <Revelar key={t} atraso={k * 90} className="moldura p-6 text-center transition hover:-translate-y-1 hover:shadow-brilho">
+            <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-champanhe/30 bg-gradient-to-br from-ouro/20 to-transparent text-champanhe"><Icone nome={e} className="h-6 w-6" /></span>
+            <p className="mt-3 font-serif text-xl leading-tight">{t}</p><p className="mt-1 text-xs text-marrom/60">{d}</p>
+          </Revelar>
         ))}
       </div>
     </section>
@@ -240,7 +259,7 @@ export function Sobre() {
   return (
     <section className="relative overflow-hidden border-y border-ouro/10 bg-[radial-gradient(ellipse_at_left,rgba(201,163,95,.12),transparent_60%)] py-24" id="sobre">
       <div className="secao grid items-center gap-10 md:grid-cols-[auto_1fr]">
-        <RetratoRafael size={220} />
+        <RetratoRafael size={220} foto={FOTOS.rafael} />
         <div>
           <p className="kicker">Sobre o ateliê</p>
           <h2 className="titulo-secao mt-3">Arquitetura emocional <em className="texto-ouro">com flores</em></h2>
@@ -264,8 +283,8 @@ export function InstagramVivo() {
         <h2 className="titulo-secao mt-2">@florista.rafaelcunha</h2>
         <p className="mt-4 text-marrom/75">Lírios amarelos, hortênsias azuis e orquídeas roxas: a paleta assinatura nasceu deste post no Solar Real. Acompanhe os bastidores de cada celebração.</p>
         <div className="mt-6 grid grid-cols-3 gap-3 text-sm">
-          {[['🪴', 'Blog de cuidados', '/cuidados/bouquet-solar-luz'], ['🌺', 'Flores da estação', '/flores'], ['📅', 'Agenda aberta', '/agenda']].map(([e, t, h]) => (
-            <Link key={t} href={h} className="moldura p-4 text-center transition hover:-translate-y-1 hover:shadow-brilho"><span className="text-2xl">{e}</span><p className="mt-1">{t}</p></Link>
+          {([['regador', 'Blog de cuidados', '/cuidados/bouquet-solar-luz'], ['flor', 'Flores da estação', '/flores'], ['calendario', 'Agenda aberta', '/agenda']] as const).map(([e, t, h]) => (
+            <Link key={t} href={h} className="moldura p-4 text-center transition hover:-translate-y-1 hover:shadow-brilho"><Icone nome={e} className="mx-auto h-6 w-6 text-champanhe" /><p className="mt-2">{t}</p></Link>
           ))}
         </div>
       </div>

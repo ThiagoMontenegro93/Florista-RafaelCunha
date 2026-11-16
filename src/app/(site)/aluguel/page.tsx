@@ -34,7 +34,7 @@ export default function AluguelPage() {
           const caucao = p.caucao * q;
           return (
             <article key={p.id} className="moldura flex flex-col p-5">
-              <div className="flex items-center gap-3"><span className="text-4xl">{p.emoji}</span><div><h2 className="font-serif text-xl leading-tight">{p.nome}</h2><p className="text-xs text-marrom/60">{brl(p.preco)}/dia · caução {brl(p.caucao)}</p></div></div>
+              <div className="flex items-center gap-3"><span className="medalhao">{p.emoji}</span><div><h2 className="font-serif text-xl leading-tight">{p.nome}</h2><p className="text-xs text-marrom/60">{brl(p.preco)}/dia · caução {brl(p.caucao)}</p></div></div>
               <p className={cn('mt-3 text-sm', livre === 0 ? 'text-rosa' : 'text-salvia')} data-livre={livre}>{periodoOk ? (livre === 0 ? 'Indisponível no período' : `${livre} disponível(is) no período`) : `Acervo: ${p.estoque} un.`}</p>
               <div className="mt-auto flex items-center gap-2 pt-4">
                 <select className="campo w-20" aria-label="Quantidade" value={q} disabled={!periodoOk || livre === 0} onChange={(e) => setQtd({ ...qtd, [p.id]: +e.target.value })}>{Array.from({ length: Math.max(1, livre) }, (_, i) => i + 1).map((n) => <option key={n}>{n}</option>)}</select>

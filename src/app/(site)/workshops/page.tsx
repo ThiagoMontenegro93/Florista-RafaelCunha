@@ -23,7 +23,7 @@ export default function WorkshopsPage() {
           const q = Math.min(qtd[w.id] ?? 1, Math.max(1, vagas));
           return (
             <article key={w.id} className="moldura flex flex-col p-6">
-              <span className="text-5xl">{w.emoji}</span>
+              <span className="medalhao">{w.emoji}</span>
               <p className="kicker mt-3">{dataBR(w.data)} · {w.hora} · {w.duracao}</p>
               <h2 className="mt-1 font-serif text-2xl">{w.nome}</h2>
               <p className="mt-2 flex-1 text-sm text-marrom/70">{w.descricao}</p>

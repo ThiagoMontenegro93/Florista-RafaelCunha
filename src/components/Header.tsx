@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useAtelie } from '@/lib/store';
-import { RamoEucalipto } from './Ornamentos';
+import { RamoEucalipto, Icone } from './Ornamentos';
 import { TELEFONE, cn } from '@/lib/format';
 import { UFS } from '@/data/ufs';
 import { SERVICOS } from '@/data/servicos';
@@ -62,7 +62,7 @@ export function Header() {
                 <div className="rounded-moldura bg-creme"><div className="moldura grid grid-cols-2 gap-1 p-3 shadow-suave">
                   {SERVICOS.map((x) => (
                     <Link key={x.href} href={x.href} className="flex items-start gap-3 rounded-xl p-2 transition hover:bg-blush">
-                      <span className="text-xl">{x.e}</span><span><span className="block text-sm text-marrom">{x.label}</span><span className="text-[11px] text-marrom/55">{x.d}</span></span>
+                      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-champanhe/30 text-champanhe"><Icone nome={x.icone} className="h-4 w-4" /></span><span><span className="block text-sm text-marrom">{x.label}</span><span className="text-[11px] text-marrom/55">{x.d}</span></span>
                     </Link>
                   ))}
                 </div></div>
@@ -72,7 +72,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             <Link href="/conta" className="hidden text-sm text-marrom/70 hover:text-ouro sm:block">Minha conta</Link>
             <button onClick={() => abrirCarrinho(true)} className="relative whitespace-nowrap rounded-full border border-ouro/40 bg-realce/[.03] px-4 py-2 text-sm text-champanhe transition hover:border-champanhe hover:shadow-brilho" aria-label="Abrir Atelier (carrinho)">
-              🌸 Atelier
+              <span className="inline-flex items-center gap-1.5"><Icone nome="flor" className="h-4 w-4" />Atelier</span>
               {carrinho.length > 0 && (
                 <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-ouro text-[10px] text-tinta">{carrinho.length}</span>
               )}
@@ -88,7 +88,7 @@ export function Header() {
             <Link href="/conta" onClick={() => setMenu(false)} className="rounded-xl border border-areia bg-vidro/80 px-3 py-2 text-sm">Minha conta</Link>
             <p className="kicker col-span-2 mt-2">Serviços</p>
             {SERVICOS.map((x) => (
-              <Link key={x.href} href={x.href} onClick={() => setMenu(false)} className="rounded-xl border border-ouro/25 bg-blush/60 px-3 py-2 text-sm">{x.e} {x.label}</Link>
+              <Link key={x.href} href={x.href} onClick={() => setMenu(false)} className="rounded-xl border border-ouro/25 bg-blush/60 px-3 py-2 text-sm"><span className="inline-flex items-center gap-2"><Icone nome={x.icone} className="h-4 w-4 text-champanhe" />{x.label}</span></Link>
             ))}
           </nav>
         )}

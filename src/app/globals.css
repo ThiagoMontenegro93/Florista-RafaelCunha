@@ -126,6 +126,8 @@
   .campo { @apply w-full rounded-xl border border-areia bg-veu/60 px-4 py-2.5 text-sm text-marrom placeholder:text-marrom/30 transition focus:border-ouro focus:outline-none focus:ring-2 focus:ring-ouro/20; }
   .rotulo { @apply mb-1.5 block text-[10px] font-medium uppercase tracking-[0.22em] text-champanhe/60; }
   .etiqueta { @apply inline-flex items-center rounded-full border border-champanhe/30 bg-veu/70 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.24em] text-champanhe backdrop-blur; }
+  /* medalhão dourado para ícones/emojis dos serviços */
+  .medalhao { @apply flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-champanhe/30 bg-gradient-to-br from-ouro/25 via-veu/40 to-transparent text-3xl shadow-brilho; }
   .pill { @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium; }
   .secao { @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8; }
   .titulo-secao { @apply font-serif text-4xl font-light leading-[1.02] sm:text-5xl lg:text-6xl; }
@@ -149,8 +151,14 @@
   .lg\:grid-cols-\[1fr_400px\] { display: block !important; }
 }
 
+/* revelar ao rolar (Foto.tsx › Revelar) */
+.revelar { opacity: 0; transform: translateY(28px); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
+.revelar.revelado { opacity: 1; transform: none; }
+@media print { .revelar { opacity: 1 !important; transform: none !important; } }
+
 @media (prefers-reduced-motion: reduce) {
   .petala { display: none; }
+  .revelar { opacity: 1; transform: none; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 

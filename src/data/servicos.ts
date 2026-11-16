@@ -2,14 +2,14 @@
 
 // Menu "Serviços" (header, rodapé e home)
 export const SERVICOS = [
-  { href: '/simulador', label: 'Simulador de casamento', d: 'Monte e reserve com sinal', e: '💍' },
-  { href: '/consultoria', label: 'Consultoria de noivas', d: 'Valor volta em crédito', e: '🥂' },
-  { href: '/preservacao', label: 'Preservação do buquê', d: 'Quadro, resina ou cúpula', e: '💎' },
-  { href: '/pre-venda', label: 'Pré-venda datas especiais', d: 'Natal, Mães, Namorados', e: '🎄' },
-  { href: '/aluguel', label: 'Aluguel de peças', d: 'Arcos, candelabros, vasos', e: '🕯️' },
-  { href: '/workshops', label: 'Workshops', d: 'Aprenda com Rafael', e: '✂️' },
-  { href: '/corporativo', label: 'Plano corporativo', d: 'Flores na empresa', e: '🏢' },
-  { href: '/parceiros', label: 'Seja parceiro', d: 'Comissão por indicação', e: '🤝' },
+  { href: '/simulador', icone: 'aneis' as const, label: 'Simulador de casamento', d: 'Monte e reserve com sinal', e: '💍' },
+  { href: '/consultoria', icone: 'taca' as const, label: 'Consultoria de noivas', d: 'Valor volta em crédito', e: '🥂' },
+  { href: '/preservacao', icone: 'diamante' as const, label: 'Preservação do buquê', d: 'Quadro, resina ou cúpula', e: '💎' },
+  { href: '/pre-venda', icone: 'calendario' as const, label: 'Pré-venda datas especiais', d: 'Natal, Mães, Namorados', e: '🎄' },
+  { href: '/aluguel', icone: 'vela' as const, label: 'Aluguel de peças', d: 'Arcos, candelabros, vasos', e: '🕯️' },
+  { href: '/workshops', icone: 'tesoura' as const, label: 'Workshops', d: 'Aprenda com Rafael', e: '✂️' },
+  { href: '/corporativo', icone: 'predio' as const, label: 'Plano corporativo', d: 'Flores na empresa', e: '🏢' },
+  { href: '/parceiros', icone: 'aperto' as const, label: 'Seja parceiro', d: 'Comissão por indicação', e: '🤝' },
 ];
 
 // ───────── 2. Preservação do buquê ─────────

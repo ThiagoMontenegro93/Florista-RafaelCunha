@@ -77,6 +77,14 @@ Cinco temas, todos com o dourado como assinatura. O padrão é **Rosé & Azul P�
 
 As cores ficam em variáveis CSS (`src/app/globals.css`) e o Tailwind lê essas variáveis, então qualquer tela nova herda o tema.
 
+## Fotos reais
+
+Cada arranjo da loja, do portfólio, dos planos e das Flores do Brasil já tem um espaço para foto. Enquanto a foto não é cadastrada, o site desenha uma **arte botânica** com as flores e a paleta daquele arranjo (rosas, hortênsias, lírios, orquídeas, lisianthus, girassóis, eucalipto…), então nada fica com cara de "sem imagem".
+
+1. Coloque as fotos em `public/fotos/` (JPG ou WebP, ~1600px no lado maior), por exemplo `public/fotos/produtos/bouquet-solar-luz.jpg`.
+2. Aponte em `src/data/fotos.ts` pelo id: produto (`bouquet-solar-luz`), portfólio (`santa-ignez-arco-branco`), `hero`, `rafael`, `plano-encanto`, `flor-rosa`. URLs do Cloudinary também funcionam.
+3. No portfólio, a foto também pode ser colada em **Admin › Portfólio**. Item do portfólio sem foto aparece com a etiqueta "Ilustração", para não passar a ideia de foto real.
+
 ## As 10 ideias de negócio
 
 | # | Ideia | Cliente | Admin |

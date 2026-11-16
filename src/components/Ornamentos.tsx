@@ -73,7 +73,7 @@ export function Petalas({ qtd = 14 }: { qtd?: number }) {
   );
 }
 
-type IconeNome = 'tesoura' | 'regador' | 'fita' | 'vaso' | 'gota' | 'sol' | 'borrifo' | 'polen' | 'raiz' | 'camera' | 'cadeado' | 'mao' | 'caminhao' | 'folha';
+export type IconeNome = 'tesoura' | 'regador' | 'fita' | 'vaso' | 'gota' | 'sol' | 'borrifo' | 'polen' | 'raiz' | 'camera' | 'cadeado' | 'mao' | 'caminhao' | 'folha' | 'aneis' | 'taca' | 'diamante' | 'calendario' | 'vela' | 'predio' | 'aperto' | 'relogio' | 'flor' | 'instagram' | 'estrela';
 
 const paths: Record<IconeNome, JSX.Element> = {
   tesoura: <><circle cx="6" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><path d="M8.5 7.5 20 18M8.5 16.5 20 6" /></>,
@@ -90,6 +90,17 @@ const paths: Record<IconeNome, JSX.Element> = {
   mao: <><path d="M7 11V5a1.5 1.5 0 0 1 3 0v5M10 10V4a1.5 1.5 0 0 1 3 0v6M13 10V5a1.5 1.5 0 0 1 3 0v7M16 12V8a1.5 1.5 0 0 1 3 0v6a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-3l-2.5-4a1.5 1.5 0 0 1 2.5-1.5L7 14" /></>,
   caminhao: <><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7z" /><circle cx="7" cy="18" r="1.8" /><circle cx="17" cy="18" r="1.8" /></>,
   folha: <><path d="M5 19C5 10 11 5 20 4c-1 9-6 15-15 15z" /><path d="M5 19 14 10" /></>,
+  aneis: <><circle cx="9" cy="14" r="5.5" /><circle cx="15" cy="14" r="5.5" /><path d="M10 5l2-2 2 2-2 2.5z" /></>,
+  taca: <><path d="M6 3h5l-.5 6a2 2 0 0 1-4 0zM8.5 11v8M6 19h5" /><path d="M13 3h5l-.5 6a2 2 0 0 1-4 0zM15.5 11v8M13 19h5" /></>,
+  diamante: <><path d="M6 4h12l3 5-9 11L3 9z" /><path d="M3 9h18M9 4l3 16 3-16" /></>,
+  calendario: <><rect x="4" y="5" width="16" height="15" rx="2" /><path d="M4 10h16M9 3v4M15 3v4" /><circle cx="12" cy="15" r="1.4" /></>,
+  vela: <><path d="M9 10h6v10H9z" /><path d="M12 10V8M12 3c1.5 2 1.5 3.5 0 5-1.5-1.5-1.5-3 0-5z" /><path d="M6 20h12" /></>,
+  predio: <><path d="M5 21V4h9v17M14 9h5v12M3 21h18" /><path d="M8 7h3M8 11h3M8 15h3M16.5 13h.01M16.5 17h.01" /></>,
+  aperto: <><path d="M3 12l4-4 5 3 4-3 5 4" /><path d="M7 8v5l4 4c1 1 2 1 3 0l4-4" /><path d="M11 13l2 2M13 11l2 2" /></>,
+  relogio: <><circle cx="12" cy="12" r="8.5" /><path d="M12 7v5l3.5 2" /></>,
+  flor: <><circle cx="12" cy="9" r="2.2" /><path d="M12 6.8C11 4 13 2.5 12 2.5s1 1.5 0 4.3M14 8.2c2.6-1.4 4 .5 4.2-.4M14 10c2.6 1.4 2.2 3.7 1.5 3.1M10 10c-2.6 1.4-2.2 3.7-1.5 3.1M10 8.2C7.4 6.8 6 8.7 5.8 7.8" /><path d="M12 11.2V21M12 17c-2.5-2-5-1.5-5-1.5s1 3 5 1.5M12 15c2.5-2 5-1.5 5-1.5s-1 3-5 1.5" /></>,
+  instagram: <><rect x="4" y="4" width="16" height="16" rx="5" /><circle cx="12" cy="12" r="3.6" /><circle cx="17" cy="7" r=".6" /></>,
+  estrela: <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 17l-5.2 2.7 1-5.9-4.3-4.1 5.9-.8z" />,
 };
 
 export function Icone({ nome, className = 'h-5 w-5' }: { nome: IconeNome; className?: string }) {

@@ -6,6 +6,14 @@ import { PLANOS, precoCiclo, type Plano } from '@/data/planos';
 import { useAtelie } from '@/lib/store';
 import { brl, cn, waLink } from '@/lib/format';
 import { Calendario } from '@/components/Calendario';
+import { FotoArranjo } from '@/components/Foto';
+import { FOTOS } from '@/data/fotos';
+
+const ARTE_PLANO: Record<string, { flores: string[]; paleta: string; forma: 'buque' | 'vaso' | 'pedestal'; fundo: [string, string] }> = {
+  essencial: { flores: ['astromelia', 'tango', 'eucalipto'], paleta: 'Rosa queimado', forma: 'buque', fundo: ['#FFF1E8', '#F3D3C4'] },
+  encanto: { flores: ['lirio-amarelo', 'hortensia-azul', 'rosa', 'eucalipto'], paleta: 'Amarelo+Azul assinatura', forma: 'vaso', fundo: ['#FBE9A6', '#CFE0F1'] },
+  eterno: { flores: ['orquidea-roxa', 'rosa', 'lisianthus', 'eucalipto'], paleta: 'Branco puro', forma: 'pedestal', fundo: ['#F4ECF6', '#E3CDEB'] },
+};
 
 function CardPlano({ p, onEscolher, ciclo }: { p: Plano; onEscolher?: (ciclo: number) => void; ciclo?: number }) {
   const { ciclos } = useAtelie();
@@ -13,9 +21,11 @@ function CardPlano({ p, onEscolher, ciclo }: { p: Plano; onEscolher?: (ciclo: nu
   const [sel, setSel] = useState<number>(ciclo ?? primeiro);
   const atual = ciclos.find((c) => c.dias === sel && c.habilitado) ?? ciclos.find((c) => c.habilitado);
   return (
-    <article className={cn('moldura relative flex flex-col p-8 transition duration-500 hover:-translate-y-1', p.destaque && 'shadow-brilho ring-1 ring-champanhe/60 ring-offset-4 ring-offset-creme lg:scale-[1.03]')}>
+    <article className={cn('group moldura relative flex flex-col p-8 transition duration-500 hover:-translate-y-1', p.destaque && 'shadow-brilho ring-1 ring-champanhe/60 ring-offset-4 ring-offset-creme lg:scale-[1.03]')}>
       {p.destaque && <span className="etiqueta absolute -top-3 left-1/2 -translate-x-1/2 !bg-ouro !text-tinta">Best</span>}
-      <span className="text-4xl">{p.emoji}</span>
+      {ARTE_PLANO[p.id] ? (
+        <FotoArranjo imagem={FOTOS[`plano-${p.id}`]} alt={`Plano ${p.nome}`} seed={'plano-' + p.id} {...ARTE_PLANO[p.id]} className="group -mx-4 -mt-4 mb-2 aspect-[16/10] rounded-[24px]" />
+      ) : <span className="text-4xl">{p.emoji}</span>}
       <h3 className={cn("mt-2 text-5xl font-light", p.destaque && "texto-ouro")}>{p.nome}</h3>
       <p className="text-sm text-marrom/60">{p.publico}</p>
       <div className="mt-5 grid grid-cols-3 gap-1 rounded-full border border-areia bg-veu/40 p-1 text-[11px]">

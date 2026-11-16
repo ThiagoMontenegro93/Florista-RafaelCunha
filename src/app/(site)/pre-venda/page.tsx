@@ -49,7 +49,7 @@ export default function PreVendaPage() {
           const pct = Math.min(100, ((cap - vagas) / cap) * 100);
           return (
             <article key={p.id} className="moldura flex flex-col p-6 text-center">
-              <span className="text-5xl">{p.emoji}</span>
+              <span className="medalhao">{p.emoji}</span>
               <p className="kicker mt-3">{p.nome} · entrega {dataBR(p.data)}</p>
               <h2 className="mt-1 font-serif text-2xl">{p.produto}</h2>
               <p className="mt-2 flex-1 text-sm text-marrom/70">{p.descricao}</p>
